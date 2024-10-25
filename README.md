@@ -41,17 +41,16 @@ curl -X POST \
   http://localhost:3000/posts/create \
   -H 'Content-Type: application/json' \
   -d '{
-    "title": "new post (2)",
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam finibus lacus in lorem interdum, at mollis sem consequat. Vestibulum tempus fermentum justo, id molestie risus rhoncus ac. Phasellus augue purus, finibus non posuere molestie, laoreet at metus. Nam posuere non tellus nec laoreet. Etiam eu blandit lacus.",
-    "created_at": "2020-01-01T00:00:00.000Z",
-    "author": "John Doe (2)"
+    "title": "new post qui sera supprimé",
+    "content": "Mon texte qui sera supprimé",
+    "author": "John Doe qui sera supprimé"
   }'
   ```
 
 Update avec MongoDB et Mongoose
 
 ```bash
-curl -X PUT \
+curl -X PATCH \
   http://localhost:3000/posts/update/671c24df7cd00c103b2ec021 \
   -H 'Content-Type: application/json' \
   -d '{
