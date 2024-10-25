@@ -77,6 +77,18 @@ app.post("/posts/create", (req, res) => {
     }
   });
 
+  app.delete("/posts/delete/:id", async (req, res) => {
+    try {
+      const query = { _id: req.params.id };
+      const post = await Post.findOneAndDelete(query);
+      res.send("new post successfully deleted");
+    } catch (e) {
+      console.log(e);
+      res.send(e);
+    }
+  });
+  
+
 /*
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -60,3 +60,14 @@ curl -X PATCH \
     "author": "John Doe"
   }'
   ```
+
+Delete avec MongoDB et Mongoose
+
+```bash
+curl -X DELETE \
+  http://localhost:3000/posts/delete/671c26d86dbb881280bf5bc8 \
+  -H 'Content-Type: application/json' \
+  -d '{
+
+  }'
+  ```
