@@ -27,10 +27,23 @@ app.get('/', (req, res) => {
   res.send('Hello Backend Express World!')
 })
 
+/** Get local data */
+/*
 app.get("/posts", (req, res) => {
     const data_posts = [...posts, ...data];
     res.send(data_posts);
   });
+*/
+
+/** Get data from database */
+app.get("/posts", async (req, res) => {
+  try {
+    const posts = await Post.find({});
+    res.send(posts);
+  } catch (e) {
+    res.send(e);
+  }
+});
 
   /*
 app.post("/posts/create", (req, res) => {

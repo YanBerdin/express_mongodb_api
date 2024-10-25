@@ -21,7 +21,7 @@
 
 🖥️ Saisir dans le terminal :
 
-Sans mongoDB ni Mongoose 
+Sans mongoDB ni Mongoose
 
 ```bash
 curl -X POST \
