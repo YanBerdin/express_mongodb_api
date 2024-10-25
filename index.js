@@ -4,6 +4,8 @@ const app = express()
 const port = process.env.PORT || 3000;
 const data = require("./posts");
 
+app.use(express.json());
+
 let posts = [];
 
 app.get('/', (req, res) => {
@@ -17,7 +19,8 @@ app.get("/posts", (req, res) => {
   
 
 app.post("/posts/create", (req, res) => {
-    posts = [...posts, ...data, ...req.body];
+    // posts = [...posts, ...data, ...req.body];
+    posts = [...posts, req.body];
     res.send("new post successfully added");
   });
   
