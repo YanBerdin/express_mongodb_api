@@ -21,6 +21,8 @@
 
 🖥️ Saisir dans le terminal :
 
+Sans mongoDB ni Mongoose 
+
 ```bash
 curl -X POST \
   http://localhost:3000/posts/create \
@@ -31,3 +33,17 @@ curl -X POST \
   }'
 
 ```
+
+Avec MongoDB et Mongoose
+
+```bash
+curl -X POST \
+  http://localhost:3000/posts/create \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "title": "new post",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam finibus lacus in lorem interdum, at mollis sem consequat. Vestibulum tempus fermentum justo, id molestie risus rhoncus ac. Phasellus augue purus, finibus non posuere molestie, laoreet at metus. Nam posuere non tellus nec laoreet. Etiam eu blandit lacus.",
+    "created_at": "2020-01-01T00:00:00.000Z",
+    "author": "John Doe"
+  }'
+  ```

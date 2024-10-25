@@ -24,7 +24,7 @@ app.use(
 let posts = [];
 
 app.get('/', (req, res) => {
-  res.send('Hello Backend World!')
+  res.send('Hello Backend Express World!')
 })
 
 app.get("/posts", (req, res) => {
