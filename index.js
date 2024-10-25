@@ -40,8 +40,8 @@ app.get("/posts", async (req, res) => {
   try {
     const posts = await Post.find({});
     res.send(posts);
-  } catch (e) {
-    res.send(e);
+  } catch (error) {
+    res.send(error);
   }
 });
 
@@ -64,7 +64,26 @@ app.post("/posts/create", (req, res) => {
     }
   });
   
-
+  app.put("/posts/update/:id", async (req, res) => {
+    try {
+      const query = { _id: req.params.id };
+      const update = req.body;
+      const post = await Post.curl -X PUT \
+      http://localhost:3000/posts/update/671c24df7cd00c103b2ec021 \
+      -H 'Content-Type: application/json' \
+      -d '{
+        "title": "updated post",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam finibus lacus in lorem interdum, at mollis sem consequat. Vestibulum tempus fermentum justo, id molestie risus rhoncus ac. Phasellus augue purus, finibus non posuere molestie, laoreet at metus. Nam posuere non tellus nec laoreet. Etiam eu blandit lacus.",
+        "created_at": "2020-01-01T00:00:00.000Z",
+        "author": "John Doe"
+      }'(query, update);
+      post.save();
+      res.send("new post successfully edited");
+    } catch (e) {
+      console.log(e);
+      res.send(e);
+    }
+  });
 
 /*
 app.listen(port, () => {
