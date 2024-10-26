@@ -2,7 +2,7 @@ const {
     findPosts,
     createPost,
     findOnePost,
-    findOnePostAndUpdate,
+    updateOne,
     findOnePostAndDelete,
   } = require("./controllers/post");
   
@@ -10,7 +10,6 @@ const {
     router.get("/posts", findPosts);
     router.get("/posts/:id", findOnePost);
     router.post("/posts/create", createPost);
-    router.put("/posts/update/:id", findOnePostAndUpdate);
+    router.patch("/posts/update/:id", updateOne);
     router.delete("/posts/delete/:id", findOnePostAndDelete);
   };
-  

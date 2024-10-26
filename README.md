@@ -51,7 +51,7 @@ Update avec MongoDB et Mongoose
 
 ```bash
 curl -X PATCH \
-  http://localhost:3000/posts/update/671c38ac094de37ea9461955 \
+  http://localhost:3000/posts/update/671c3cb1c8121b336840bfb1 \
   -H 'Content-Type: application/json' \
   -d '{
 

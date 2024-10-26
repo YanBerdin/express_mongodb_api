@@ -31,7 +31,8 @@ module.exports = {
       res.send({ error: "Post doesn't exist!" });
     }
   },
-  async findOnePostAndUpdate(req, res) {
+  //updateOne
+  async updateOne(req, res) {
     try {
       const query = { _id: req.params.id };
       const update = req.body;
@@ -39,12 +40,14 @@ module.exports = {
       const post = await Post.findOneAndUpdate(query, update);
 
       await post.save();
+
       res.send("new post successfully edited");
     } catch (error) {
       console.log(error);
       res.send(error);
     }
   },
+
   async findOnePostAndDelete(req, res) {
     try {
       const query = { _id: req.params.id };
