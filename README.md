@@ -54,7 +54,6 @@ curl -X PATCH \
   http://localhost:3000/posts/update/671c3cb1c8121b336840bfb1 \
   -H 'Content-Type: application/json' \
   -d '{
-
     "title": "updated MVC post",
     "content": "Updated Lorem ipsum",
     "created_at": "",

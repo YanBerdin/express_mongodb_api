@@ -31,8 +31,8 @@ module.exports = {
       res.send({ error: "Post doesn't exist!" });
     }
   },
-  //updateOne
-  async updateOne(req, res) {
+  //findByIdAndUpdate
+  async findByIdAndUpdate(req, res) {
     try {
       const query = { _id: req.params.id };
       const update = req.body;
