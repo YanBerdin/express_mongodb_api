@@ -1,29 +1,25 @@
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
-const Post = require("./models");
-//const port = 3000
+const app = express();
+//const Post = require("./models");
 const port = process.env.port || 3000;
-const data = require("./posts");
-const helmet = require("helmet");
+//const data = require("./posts");
+const router = express.Router();
+require("./src/routes")(router);
 
 app.use(express.json());
 
+// let posts = [];
+
+/** Without routeur */
 /*
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "https://moonlit-tomb-9rp6jqx6jv5364q-3000.app.github.dev/"],
-      // Ajoutez d'autres directives si nécessaire
-    },
-  })
-);
+app.get("/", (req, res) => {
+  res.send("Hello Backend Express World!");
+});
 */
 
-let posts = [];
-
-app.get("/", (req, res) => {
+// Définir une route GET pour la racine
+router.get("/", (req, res) => {
   res.send("Hello Backend Express World!");
 });
 
@@ -35,7 +31,9 @@ app.get("/posts", (req, res) => {
   });
 */
 
+
 /** Get data from database */
+/*
 app.get("/posts", async (req, res) => {
   try {
     const posts = await Post.find({});
@@ -44,6 +42,7 @@ app.get("/posts", async (req, res) => {
     res.send(error);
   }
 });
+*/
 
 /** Get local data */
 /*
@@ -54,7 +53,8 @@ app.post("/posts/create", (req, res) => {
   });
   */
 
-/** data from mongoDB */
+/** data from database */
+/*
 app.post("/posts/create", (req, res) => {
   try {
     const post = new Post(req.body);
@@ -65,7 +65,9 @@ app.post("/posts/create", (req, res) => {
     res.send(error);
   }
 });
+*/
 
+/*
 app.put("/posts/update/:id", async (req, res) => {
   try {
     const query = { _id: req.params.id };
@@ -78,7 +80,9 @@ app.put("/posts/update/:id", async (req, res) => {
     res.send(error);
   }
 });
+*/
 
+/*
 app.delete("/posts/delete/:id", async (req, res) => {
   try {
     const query = { _id: req.params.id };
@@ -89,6 +93,7 @@ app.delete("/posts/delete/:id", async (req, res) => {
     res.send(error);
   }
 });
+*/
 
 /* Local data */
 /*
@@ -97,10 +102,24 @@ app.listen(port, () => {
 })
 */
 
-/* Database data */
+/* Database data without routeur */
+/*
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
   mongoose.connect("mongodb://127.0.0.1:27017/database").then(() => {
     console.log("successfully connected to the database !");
+  });
+});
+*/
+
+// Utiliser le routeur
+app.use("/", router);
+
+// Démarrer le serveur
+app.listen(port, () => {
+
+  console.log(`Example app listening on port ${port}`);
+  mongoose.connect("mongodb://127.0.0.1:27017/database").then(() => {
+    console.log("successfully connected to the database");
   });
 });

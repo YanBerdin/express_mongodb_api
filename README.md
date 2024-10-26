@@ -41,9 +41,9 @@ curl -X POST \
   http://localhost:3000/posts/create \
   -H 'Content-Type: application/json' \
   -d '{
-    "title": "new post qui sera supprimé",
-    "content": "Mon texte qui sera supprimé",
-    "author": "John Doe qui sera supprimé"
+    "title": "new post MVC",
+    "content": "Mon texte MVC",
+    "author": "MVC MAN "
   }'
   ```
 
@@ -51,13 +51,14 @@ Update avec MongoDB et Mongoose
 
 ```bash
 curl -X PATCH \
-  http://localhost:3000/posts/update/671c24df7cd00c103b2ec021 \
+  http://localhost:3000/posts/update/671c38ac094de37ea9461955 \
   -H 'Content-Type: application/json' \
   -d '{
-    "title": "updated post",
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam finibus lacus in lorem interdum, at mollis sem consequat. Vestibulum tempus fermentum justo, id molestie risus rhoncus ac. Phasellus augue purus, finibus non posuere molestie, laoreet at metus. Nam posuere non tellus nec laoreet. Etiam eu blandit lacus.",
-    "created_at": "2020-01-01T00:00:00.000Z",
-    "author": "John Doe"
+
+    "title": "updated MVC post",
+    "content": "Updated Lorem ipsum",
+    "created_at": "",
+    "author": "Updated MVC author"
   }'
   ```
 
@@ -65,7 +66,7 @@ Delete avec MongoDB et Mongoose
 
 ```bash
 curl -X DELETE \
-  http://localhost:3000/posts/delete/671c26d86dbb881280bf5bc8 \
+  http://localhost:3000/posts/delete/671c38ac094de37ea9461955 \
   -H 'Content-Type: application/json' \
   -d '{
 
