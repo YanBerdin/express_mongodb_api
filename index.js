@@ -6,6 +6,7 @@ const port = process.env.port || 3000;
 //const data = require("./posts");
 const router = express.Router();
 require("./src/routes")(router);
+require ("./src/userroutes")(router);
 
 app.use(express.json());
 

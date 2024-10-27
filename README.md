@@ -11,19 +11,28 @@
 
 `npm start`
 
-## Tester le projet
+## Démarrer MongoDB
 
-### Envoi d'une requête GET à l'URL <http://localhost:5000/posts>
+`sudo service mongodb start`
 
-`curl http://localhost:5000/posts`
+## Vérifier son status
 
-### Envoi d'une requête POST à l'URL <http://localhost:5000/posts/create>
+`sudo service mongodb status`
 
-🖥️ Saisir dans le terminal :
+## Tester les requêtes pour les posts
 
-Create Sans mongoDB ni Mongoose
+### Envoi d'une requête GET à l'URL <http://localhost:3000/posts>
+
+`curl http://localhost:3000/posts`
+
+### Envoi d'une requête POST à l'URL <http://localhost:3000/posts/create>
+
+🖥️ Executer dans le terminal :
+
+### Requêtes POST pour créer un post avec data locales
 
 ```bash
+
 curl -X POST \
   http://localhost:3000/posts/create \
   -H 'Content-Type: application/json' \
@@ -34,9 +43,10 @@ curl -X POST \
 
 ```
 
-Create avec MongoDB et Mongoose
+### Requêtes POST pour creér un post
 
 ```bash
+
 curl -X POST \
   http://localhost:3000/posts/create \
   -H 'Content-Type: application/json' \
@@ -45,9 +55,10 @@ curl -X POST \
     "content": "Mon texte MVC",
     "author": "MVC MAN "
   }'
-  ```
 
-Update avec MongoDB et Mongoose
+```
+
+### Requêtes PATCH pour Update un post
 
 ```bash
 curl -X PATCH \
@@ -59,15 +70,51 @@ curl -X PATCH \
     "created_at": "",
     "author": "Updated MVC author"
   }'
-  ```
 
-Delete avec MongoDB et Mongoose
+```
+
+### Requêtes Delete pour supprimer un post
 
 ```bash
+
 curl -X DELETE \
   http://localhost:3000/posts/delete/671c38ac094de37ea9461955 \
   -H 'Content-Type: application/json' \
   -d '{
 
   }'
-  ```
+
+```
+
+## Tester les requêtes pour les utilisateurs
+
+### Requêtes POST pour créer un utilisateur <http://localhost:3000/auth/register>
+
+```bash
+
+curl -X POST \
+  http://localhost:3000/auth/register  \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "firstName": "Diana",
+    "lastName": "Linares",
+    "username": "diana2023",
+    "email": "diana2023@gmail.com",
+    "password": "0./<>@5/#89"
+  }'
+
+```
+
+### Requêtes POST pour connecter un utilisateur <http://localhost:3000/api/posts/auth/login>
+
+```bash
+
+curl -X POST \
+  http://localhost:3000/auth/login \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "email": "diana2023@gmail.com",
+    "password": "0./<>@5/#89"
+  }'
+
+```
