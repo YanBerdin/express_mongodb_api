@@ -5,8 +5,9 @@ const app = express();
 const port = process.env.port || 3000;
 //const data = require("./posts");
 const router = express.Router();
+require("dotenv").config();
 require("./src/routes")(router);
-require ("./src/userroutes")(router);
+require("./src/userroutes")(router);
 
 app.use(express.json());
 
@@ -31,7 +32,6 @@ app.get("/posts", (req, res) => {
     res.send(data_posts);
   });
 */
-
 
 /** Get data from database */
 /*
@@ -118,9 +118,8 @@ app.use("/", router);
 
 // Démarrer le serveur
 app.listen(port, () => {
-
   console.log(`Example app listening on port ${port}`);
-  mongoose.connect("mongodb://127.0.0.1:27017/database").then(() => {
+  mongoose.connect(process.env.MONGODB_URI).then(() => {
     console.log("successfully connected to the database");
   });
 });
