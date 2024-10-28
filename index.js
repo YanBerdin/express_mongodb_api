@@ -4,11 +4,26 @@ const app = express();
 //const Post = require("./models");
 const port = process.env.port || 3000;
 //const data = require("./posts");
-const router = express.Router();
+
 require("dotenv").config();
-require("./src/routes/routes")(router);
-require("./src/routes/userroutes")(router);
-require("./src/protected_routes/posts")(router);
+
+const postrouter = express.Router(); // const router = express.Router();
+const userrouter = express.Router();
+const protectedrouter = express.Router();
+
+// require("./src/routes/posts")(router);
+require("./src/routes/freeposts")(postrouter);
+//! require("./src/routes/post")(postrouter);
+// require("./src/routes/userroutes")(router);
+require("./src/routes/userroutes")(userrouter);
+require("./src/protected_routes/protectedposts")(protectedrouter);
+
+
+
+
+
+// require("./src/protected_routes/post")(protectedrouter);
+
 
 app.use(express.json());
 
@@ -22,7 +37,7 @@ app.get("/", (req, res) => {
 */
 
 // Définir une route GET pour la racine
-router.get("/", (req, res) => {
+postrouter.get("/", (req, res) => {
   res.send("Hello Backend Express World!");
 });
 
@@ -115,7 +130,9 @@ app.listen(port, () => {
 */
 
 // Utiliser le routeur
-app.use("/", router);
+app.use("/", postrouter);
+app.use("/", userrouter);
+app.use("/", protectedrouter);
 
 // Démarrer le serveur
 app.listen(port, () => {

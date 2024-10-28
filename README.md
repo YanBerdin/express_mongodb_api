@@ -48,9 +48,9 @@ curl -X POST \
 ```bash
 
 curl -X POST \
-  http://localhost:3000/posts/create \
-  -H 'Content-Type: application/json' \
-  -d '{
+http://localhost:3000/posts/create \
+-H 'Content-Type: application/json' \
+-d '{
     "title": "new post MVC",
     "content": "Mon texte MVC",
     "author": "MVC MAN "
@@ -62,9 +62,9 @@ curl -X POST \
 
 ```bash
 curl -X PATCH \
-  http://localhost:3000/posts/update/671c3cb1c8121b336840bfb1 \
-  -H 'Content-Type: application/json' \
-  -d '{
+http://localhost:3000/posts/update/671c3cb1c8121b336840bfb1 \
+-H 'Content-Type: application/json' \
+-d '{
     "title": "updated MVC post",
     "content": "Updated Lorem ipsum",
     "created_at": "",
@@ -78,10 +78,9 @@ curl -X PATCH \
 ```bash
 
 curl -X DELETE \
-  http://localhost:3000/posts/delete/671c38ac094de37ea9461955 \
-  -H 'Content-Type: application/json' \
-  -d '{
-
+http://localhost:3000/posts/delete/671c38ac094de37ea9461955 \
+-H 'Content-Type: application/json' \
+-d '{
   }'
 
 ```
@@ -93,9 +92,9 @@ curl -X DELETE \
 ```bash
 
 curl -X POST \
-  http://localhost:3000/auth/register  \
-  -H 'Content-Type: application/json' \
-  -d '{
+http://localhost:3000/auth/register \
+-H "Content-Type: application/json" \
+-d '{
     "firstName": "Diana",
     "lastName": "Linares",
     "username": "diana2023",
@@ -110,11 +109,11 @@ curl -X POST \
 ```bash
 
 curl -X POST \
-  http://localhost:3000/auth/login \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "email": "diana2023@gmail.com",
-    "password": "0./<>@5/#89"
-  }'
+http://localhost:3000/auth/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "diana2023@gmail.com",
+  "password": "0./<>@5/#89"
+}'
 
 ```
