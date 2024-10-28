@@ -32,12 +32,12 @@ module.exports = {
     }
   },
   //findByIdAndUpdate
-  async findByIdAndUpdate(req, res) {
+  async findOnePostAndUpdate(req, res) {
     try {
       const query = { _id: req.params.id };
       const update = req.body;
       console.log(req.body);
-      const post = await Post.findOneAndUpdate(query, update);
+      const post = await Post.findByIdAndUpdate(query, update);
 
       await post.save();
 

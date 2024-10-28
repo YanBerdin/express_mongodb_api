@@ -6,8 +6,9 @@ const port = process.env.port || 3000;
 //const data = require("./posts");
 const router = express.Router();
 require("dotenv").config();
-require("./src/routes")(router);
-require("./src/userroutes")(router);
+require("./src/routes/routes")(router);
+require("./src/routes/userroutes")(router);
+require("./src/protected_routes/posts")(router);
 
 app.use(express.json());
 
