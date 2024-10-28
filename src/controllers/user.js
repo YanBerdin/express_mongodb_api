@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt"),
 require("dotenv").config();
 const User = require("../models/User");
 
-const saltRounds = 10;
-const salt = bcrypt.genSaltSync(saltRounds);
+const saltRounds = 10; // Number of rounds to generate salt
+const salt = bcrypt.genSaltSync(saltRounds); // Generate salt
 
 module.exports = {
   async register(req, res) {
@@ -12,13 +12,14 @@ module.exports = {
       const newUser = await new User(req.body);
       newUser.hashedPassword = bcrypt.hashSync(req.body.password, salt);
       await newUser.save();
-      const userObj = newUser.toObject();
-      delete userObj.hashedPassword;
-      res.json(userObj);
-    } catch (e) {
-      res.json("Error while registering new account :" + e);
+      const userObj = newUser.toObject(); // Convert Mongoose object to plain JavaScript object
+      delete userObj.hashedPassword; // Delete hashed password from user object before sending it back
+      res.json(userObj); // Send the user object as response
+    } catch (error) {
+      res.json("Error while registering new account :" + error);
     }
   },
+
   async login(req, res) {
     const user = await User.findOne({ email: req.body.email });
 
@@ -32,7 +33,7 @@ module.exports = {
         res.status(401).json("Authentication failed. Invalid user or password");
       }
       return res.json({
-        token: jwt.sign(
+        token: jwt.sign( // Generate token
           {
             email: user.email,
             fullName: user.fullName,
@@ -41,8 +42,8 @@ module.exports = {
           process.env.TOKEN_SECRET
         ),
       });
-    } catch (e) {
-      res.json(e);
+    } catch (error) {
+      res.json(error);
     }
   },
 };
