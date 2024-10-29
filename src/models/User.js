@@ -34,6 +34,10 @@ const UserSchema = mongoose.Schema({
     maxlength: 50,
     match: [/\S+@\S+\.\S+/, "is invalid"],
   },
+  apiKey: {
+    type: String,
+    unique: true,
+  },
   hashedPassword: { type: String },
   created_at: {
     type: Date,
@@ -48,5 +52,7 @@ UserSchema.virtual("fullname").get(function () {
 UserSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.hashedPassword);
 };
-
+UserSchema.methods.setAPIKey = function (password) {
+  this.apiKey = bcrypt.hashSync(this.email, 10);
+};
 module.exports = mongoose.model("User", UserSchema);

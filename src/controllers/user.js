@@ -33,7 +33,8 @@ module.exports = {
         res.status(401).json("Authentication failed. Invalid user or password");
       }
       return res.json({
-        token: jwt.sign( // Generate token
+        token: jwt.sign(
+          // Generate token
           {
             email: user.email,
             fullName: user.fullName,
@@ -42,6 +43,17 @@ module.exports = {
           process.env.TOKEN_SECRET
         ),
       });
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
+  async generateAPIKey(req, res) {
+    try {
+      const user = await User.findOne({ email: req.user.email });
+      user.setAPIKey();
+      await user.save();
+      res.json({ apikey: user.apiKey });
     } catch (error) {
       res.json(error);
     }

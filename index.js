@@ -14,7 +14,6 @@ const protectedrouter = express.Router();
 
 // require("./src/routes/posts")(router);
 require("./src/routes/freeposts")(postrouter);
-//! require("./src/routes/post")(postrouter);
 // require("./src/routes/userroutes")(router);
 require("./src/routes/userroutes")(userrouter);
 // require("./src/routes/post")(router);

@@ -15,6 +15,7 @@ module.exports = {
       console.log(req.body);
       const post = await new Post(req.body);
       await post.save();
+      res.status(201).json(newPost); // Send the new post object as response
       res.send("new post successfully added");
     } catch (error) {
       console.log(error);

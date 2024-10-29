@@ -1,9 +1,10 @@
-# express_mongodb REST API
+# express mongodb REST API
 
 - **express**: framework web pour créer des application web et des serveurs Node.js
 - **nodemon**: utilitaire qui permet de redémarrer automatiquement le serveur à chaque modification des fichiers javascript
+- **mongodb**:  solution de base de données flexible, performante et adaptée à tous les cas d'utilisation.
 
-## Installation
+## Installation des dépendances
 
 `npm install`
 
@@ -13,11 +14,51 @@
 
 ## Démarrer MongoDB
 
-`sudo service mongodb start`
+### Utiliser `systemctl` (recommandé pour Ubuntu 20.04 et versions ultérieures)
 
-## Vérifier son status
+Vérifier la disponibilité de systemctl
 
-`sudo service mongodb status`
+  ```bash
+  which systemctl
+  ```
+
+Quelques commandes pour gérer MongoDB sur un système Linux avec `systemctl` :
+
+1. **Vérifier le statut du service MongoDB** :
+
+   ```bash
+   sudo systemctl status mongodb
+   ```
+
+2. **Démarrer le service MongoDB** :
+
+   ```bash
+   sudo systemctl start mongodb
+   ```
+
+3. **Arrêter le service MongoDB** :
+
+   ```bash
+   sudo systemctl stop mongodb
+   ```
+
+4. **Redémarrer le service MongoDB** :
+
+   ```bash
+   sudo systemctl restart mongodb
+   ```
+
+5. **Activer le service MongoDB au démarrage** :
+
+   ```bash
+   sudo systemctl enable mongodb
+   ```
+
+6. **Désactiver le service MongoDB au démarrage** :
+
+   ```bash
+   sudo systemctl disable mongodb
+   ```
 
 ## Tester les requêtes pour les posts
 
@@ -27,7 +68,7 @@
 
 ### Envoi d'une requête POST à l'URL <http://localhost:3000/posts/create>
 
-🖥️ Executer dans le terminal :
+🖥️ Quelques commandes pour sur un système Linux
 
 ### Requêtes POST pour créer un post avec data locales
 
@@ -115,5 +156,21 @@ http://localhost:3000/auth/login \
   "email": "diana2023@gmail.com",
   "password": "0./<>@5/#89"
 }'
+
+```
+
+### Requêtes POST pour générer une nouvelle clé API <http://localhost:5000/generateApiKey>
+
+Remplacer [$BEARER_TOKEN] par le token du user connecté
+
+```bash
+
+curl -X POST \
+  http://localhost:3000/generateApiKey \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $BEARER_TOKEN" \
+  -d '{
+    "email": "diana2023@gmail.com"
+  }'
 
 ```
