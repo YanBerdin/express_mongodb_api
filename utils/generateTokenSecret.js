@@ -1,7 +1,6 @@
 // Generate TOKEN_SECRET using the following code snippet:
-// Move this file to the root directory of the project
-// Run in the shell : node generateTokenSecret.js
-// Copy the generated token secret to the .env file
+// Run in the shell : node utils/generateTokenSecret.js
+// Paste the generated token secret to the .env file
 
 const crypto = require("crypto");
 

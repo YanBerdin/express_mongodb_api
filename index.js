@@ -2,11 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const app = express();
-//const Post = require("./models");
-const port = process.env.port || 3000;
-//const data = require("./posts");
-
 require("dotenv").config();
+//const Post = require("./models");
+const PORT = process.env.PORT;
+//const data = require("./posts");
+const MONGODB_ATLAS_URI = process.env.MONGODB_ATLAS_URI;
+
 
 const postrouter = express.Router(); // const router = express.Router();
 const userrouter = express.Router();
@@ -55,9 +56,20 @@ app.use(authorize);
 app.use("/", protectedrouter);
 
 // Démarrer le serveur
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-  mongoose.connect(process.env.MONGODB_URI).then(() => {
-    console.log("successfully connected to the database");
-  });
+app.listen(PORT, () => {
+  console.log(`Example app listening on PORT ${PORT}`);
+  mongoose
+    .connect(process.env.MONGODB_URI)
+    .then(() => {
+      console.log("successfully connected to the database");
+    })
+    .catch((err) => {
+      console.error("Error connecting to the database", err);
+    });
+  mongoose.connection.on("connected", () => console.log("connected"));
+  mongoose.connection.on("open", () => console.log("open"));
+  mongoose.connection.on("disconnected", () => console.log("disconnected"));
+  mongoose.connection.on("reconnected", () => console.log("reconnected"));
+  mongoose.connection.on("disconnecting", () => console.log("disconnecting"));
+  mongoose.connection.on("close", () => console.log("close"));
 });
