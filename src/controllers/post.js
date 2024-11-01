@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Post = require("../models/Post");
+const { validationResult } = require("express-validator");
+
 
 module.exports = {
   async findPosts(req, res) {
@@ -11,11 +13,16 @@ module.exports = {
     }
   },
   async createPost(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
       console.log(req.body);
       const post = await new Post(req.body);
       await post.save();
-      res.status(201).json(newPost); // Send the new post object as response
+      res.status(201).json(post); // Send the new post object as response
       res.send("new post successfully added");
     } catch (error) {
       console.log(error);
@@ -24,6 +31,11 @@ module.exports = {
   },
 
   async findOnePost(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
       const post = await Post.findOne({ _id: req.params.id });
       res.send(post);

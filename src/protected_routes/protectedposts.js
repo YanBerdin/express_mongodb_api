@@ -1,3 +1,10 @@
+const { validationResult } = require("express-validator");
+const {
+  validateCreatePost,
+  validateUpdatePost,
+  validatePostId,
+} = require("../validators");
+
 const {
   createPost,
   findOnePostAndUpdate,
@@ -37,17 +44,25 @@ async function apiKeyRequired(req, res, next) {
 
 module.exports = (protectedrouter) => {
   protectedrouter.post("/generateApiKey", login, generateAPIKey);
-  protectedrouter.post("/posts/create", login, apiKeyRequired, createPost);
+  protectedrouter.post(
+    "/posts/create",
+    login,
+    apiKeyRequired,
+    createPost,
+    validateCreatePost
+  );
   protectedrouter.patch(
     "/posts/update/:id",
     login,
     apiKeyRequired,
-    findOnePostAndUpdate
+    findOnePostAndUpdate,
+    validateUpdatePost
   );
   protectedrouter.delete(
     "/posts/delete/:id",
     login,
     apiKeyRequired,
-    findOnePostAndDelete
+    findOnePostAndDelete,
+    validatePostId
   );
 };

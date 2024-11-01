@@ -75,12 +75,12 @@ Quelques commandes pour gérer MongoDB sur un système Linux avec `systemctl` :
 ```bash
 
 curl -X POST \
-  http://localhost:3000/posts/create \
-  -H 'Content-Type: application/json' \
-  -d '{
+http://localhost:3000/posts/create \
+-H 'Content-Type: application/json' \
+-d '{
     "title": "new post ",
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam finibus lacus in lorem interdum, at mollis sem consequat. Vestibulum tempus fermentum justo, id molestie risus rhoncus ac. Phasellus augue purus, finibus non posuere molestie, laoreet at metus. Nam posuere non tellus nec laoreet. Etiam eu blandit lacus."
-  }'
+}'
 
 ```
 
@@ -95,7 +95,7 @@ http://localhost:3000/posts/create \
     "title": "new post MVC",
     "content": "Mon texte MVC",
     "author": "MVC MAN "
-  }'
+}'
 
 ```
 
@@ -110,7 +110,7 @@ http://localhost:3000/posts/update/671c3cb1c8121b336840bfb1 \
     "content": "Updated Lorem ipsum",
     "created_at": "",
     "author": "Updated MVC author"
-  }'
+}'
 
 ```
 
@@ -122,7 +122,7 @@ curl -X DELETE \
 http://localhost:3000/posts/delete/671c38ac094de37ea9461955 \
 -H 'Content-Type: application/json' \
 -d '{
-  }'
+}'
 
 ```
 
@@ -141,7 +141,7 @@ http://localhost:3000/auth/register \
     "username": "diana2023",
     "email": "diana2023@gmail.com",
     "password": "0./<>@5/#89"
-  }'
+}'
 
 ```
 
@@ -159,7 +159,7 @@ http://localhost:3000/auth/login \
 
 ```
 
-### Requêtes POST pour générer une nouvelle clé API <http://localhost:5000/generateApiKey>
+### Requêtes POST pour générer une nouvelle clé API [apiKeyRequired] <http://localhost:5000/generateApiKey>
 
 Remplacer [$BEARER_TOKEN] par le token du user connecté
 
@@ -171,6 +171,32 @@ curl -X POST \
   -H "Authorization: Bearer $BEARER_TOKEN" \
   -d '{
     "email": "diana2023@gmail.com"
+  }'
+
+```
+
+Ajouter dans les http-headers l'[apiKeyRequired] générée, à la clé [x-api-key].
+
+```bash
+
+curl -X POST \
+  http://localhost:3000/generateApiKey \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRpYW5hMjAyM0BnbWFpbC5jb20iLCJfaWQiOiI2NzFkYTIwYTc3MTQxMzU4NzM3Yjc1NjEiLCJpYXQiOjE3MzA0MjI0MTl9.NDMJ8U-JHNySArS4Rv8HYhdeBoTPmnI2pBUZPuPD2U4" \
+  -d '{
+    "email": "diana2023@gmail.com"
+  }'
+
+```
+
+### Requêtes Delete autorisée pour supprimer un post
+
+```bash
+
+curl -X DELETE \
+http://localhost:3000/posts/delete/671c38ac094de37ea9461955 \
+-H 'Content-Type: application/json' \
+-d '{
   }'
 
 ```
