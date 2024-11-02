@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Post = require("../models/Post");
 const { validationResult } = require("express-validator");
 
-
 module.exports = {
   async findPosts(req, res) {
     try {
@@ -22,11 +21,14 @@ module.exports = {
       console.log(req.body);
       const post = await new Post(req.body);
       await post.save();
-      res.status(201).json(post); // Send the new post object as response
-      res.send("new post successfully added");
+      if (!res.headersSent) { // Check if the response has already been sent
+        res.status(201).json(post); // Send the new post object as response
+        res.send("new post successfully added");
+      }
     } catch (error) {
       console.log(error);
       res.send(error);
+      // res.status(500).json({ message: 'Erreur lors de la création du post' });
     }
   },
 

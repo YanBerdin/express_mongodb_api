@@ -5,11 +5,13 @@ const app = express();
 require("dotenv").config();
 //const Post = require("./models");
 const PORT = process.env.PORT;
+if (!PORT) {
+  throw new Error("PORT is not defined in the environment variables"); //TODO throw new Error
+}
 //const data = require("./posts");
 const MONGODB_ATLAS_URI = process.env.MONGODB_ATLAS_URI;
-
-
-const postrouter = express.Router(); // const router = express.Router();
+// const router = express.Router();
+const postrouter = express.Router();
 const userrouter = express.Router();
 const protectedrouter = express.Router();
 
@@ -20,7 +22,7 @@ require("./src/routes/userroutes")(userrouter);
 // require("./src/routes/post")(router);
 require("./src/protected_routes/protectedposts")(protectedrouter);
 
-app.use(express.json());
+app.use(express.json()); // Middleware for parsing application/json
 
 // Middleware
 function authorize(req, res, next) {
@@ -44,7 +46,7 @@ function authorize(req, res, next) {
   }
 }
 
-// Définir une route GET pour la racine
+// Définir une route GET pour la racine de l'API
 postrouter.get("/", (req, res) => {
   res.send("Hello Backend Express World!");
 });
