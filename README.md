@@ -1,8 +1,8 @@
-# express mongodb REST API
+# Express MongoDB REST API
 
-- **express**: framework web pour créer des application web et des serveurs Node.js
-- **nodemon**: utilitaire qui permet de redémarrer automatiquement le serveur à chaque modification des fichiers javascript
-- **mongodb**:  solution de base de données flexible, performante et adaptée à tous les cas d'utilisation.
+- **Express**: Framework web pour créer des application web et des serveurs Node.js
+- **Mongodb**:  Base de données flexible, performante et adaptée à tous les cas d'utilisation.
+- **Mongoose**: Modélisation d’objets MongoDB pour Node.js. Mongoose fournit une solution, basée sur des schémas, pour modéliser les données. Il comprend le moulage de type intégré, la validation, Création de requêtes, crochets de logique métier.
 
 ## Installation des dépendances
 
@@ -97,6 +97,14 @@ http://localhost:3000/posts/create \
     "author": "MVC MAN "
 }'
 
+# Ecape  $ avec \$
+curl -X POST \
+http://localhost:3000/posts/create \
+-H 'Content-Type: application/json' \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlhbjIwMjRAZ21haWwuY29tIiwiX2lkIjoiNjcyNDM3NjNkZGMyMzJiYWQ3M2JkMWNkIiwiaWF0IjoxNzMwNTk0MDEwfQ.alrWdAGuN8z3HFTwtQCDlSaLRuGxZl69uzhApuxL294" \
+-H "x-api-key: \$2b\$10\$l4r4JJksEtOfe0eqVBCVN.gVyZFlqSvYgmeyQdvLDrx90R4cNCsk2" \
+-d '{}'
+
 ```
 
 ### Requêtes PATCH pour Update un post
@@ -145,7 +153,7 @@ http://localhost:3000/auth/register \
 
 ```
 
-### Requêtes POST pour connecter un utilisateur <http://localhost:3000/api/posts/auth/login>
+### Requêtes POST pour connecter un utilisateur <http://localhost:3000/api/auth/login>
 
 ```bash
 
@@ -155,6 +163,18 @@ http://localhost:3000/auth/login \
 -d '{
   "email": "diana2023@gmail.com",
   "password": "0./<>@5/#89"
+}'
+
+```
+
+```bash
+
+curl -X POST \
+http://localhost:3000/auth/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "yan2024@gmail.com",
+  "password": "/0./<>@5/#300"
 }'
 
 ```
@@ -189,6 +209,18 @@ curl -X POST \
 
 ```
 
+```bash
+
+curl -X POST \
+  http://localhost:3000/generateApiKey \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlhbjIwMjRAZ21haWwuY29tIiwiX2lkIjoiNjcyNDM3NjNkZGMyMzJiYWQ3M2JkMWNkIiwiaWF0IjoxNzMwNTk0MDEwfQ.alrWdAGuN8z3HFTwtQCDlSaLRuGxZl69uzhApuxL294" \
+  -d '{
+    "email": "yan2024@gmail.com"
+  }'
+
+```
+
 ### Requêtes Delete autorisée pour supprimer un post
 
 ```bash
@@ -198,5 +230,29 @@ http://localhost:3000/posts/delete/671c38ac094de37ea9461955 \
 -H 'Content-Type: application/json' \
 -d '{
   }'
+
+```
+
+```bash
+
+curl -X DELETE \
+http://localhost:3000/posts/delete/671fd311586b969192e0735e \
+-H 'Content-Type: application/json' \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlhbjIwMjRAZ21haWwuY29tIiwiX2lkIjoiNjcyNDM3NjNkZGMyMzJiYWQ3M2JkMWNkIiwiaWF0IjoxNzMwNTk0MDEwfQ.alrWdAGuN8z3HFTwtQCDlSaLRuGxZl69uzhApuxL294" \
+-H "x-api-key: \$2b\$10\$UIVDQ30e5CrhAnBJQDoVvO1mouboA71tHmIUZF3/GZ3aF.IXfHjei" \
+-d '{}'
+
+```
+
+### Requêtes POST pour logout
+
+```bash
+
+curl -X POST \
+http://localhost:3000/auth/logout \
+-H 'Content-Type: application/json' \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlhbjIwMjRAZ21haWwuY29tIiwiX2lkIjoiNjcyNDM3NjNkZGMyMzJiYWQ3M2JkMWNkIiwiaWF0IjoxNzMwNTkzNjMxfQ.6g96Tk3jZFnbemz1w1gX6ruw7jHwKdmXPb_3-g6V8Us" \
+-H "x-api-key: \$2b\$10\$lyRhn19ngbWDZkc.yeGUe.L1TlrL4mVk6CgSoBLeiKeGJJ8UPpube" \
+-d '{}'
 
 ```

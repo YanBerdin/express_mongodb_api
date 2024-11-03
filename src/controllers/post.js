@@ -21,10 +21,8 @@ module.exports = {
       console.log(req.body);
       const post = await new Post(req.body);
       await post.save();
-      if (!res.headersSent) { // Check if the response has already been sent
         res.status(201).json(post); // Send the new post object as response
         res.send("new post successfully added");
-      }
     } catch (error) {
       console.log(error);
       res.send(error);

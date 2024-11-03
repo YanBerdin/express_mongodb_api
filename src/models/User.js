@@ -43,6 +43,7 @@ const UserSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  refreshToken: { type: String },
 });
 
 UserSchema.virtual("fullname").get(function () {

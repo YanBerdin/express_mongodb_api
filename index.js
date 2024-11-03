@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const RevokedToken = require("./src/models/RevokedToken");
 const app = express();
 require("dotenv").config();
 //const Post = require("./models");
@@ -14,6 +15,7 @@ const MONGODB_ATLAS_URI = process.env.MONGODB_ATLAS_URI;
 const postrouter = express.Router();
 const userrouter = express.Router();
 const protectedrouter = express.Router();
+const protectedUserRouter = express.Router();
 
 // require("./src/routes/posts")(router);
 require("./src/routes/freeposts")(postrouter);
@@ -21,10 +23,12 @@ require("./src/routes/freeposts")(postrouter);
 require("./src/routes/userroutes")(userrouter);
 // require("./src/routes/post")(router);
 require("./src/protected_routes/protectedposts")(protectedrouter);
+require("./src/protected_routes/protectedUserRoute")(protectedUserRouter);
 
 app.use(express.json()); // Middleware for parsing application/json
 
 // Middleware
+/*
 function authorize(req, res, next) {
   if (
     req.headers &&
@@ -45,6 +49,51 @@ function authorize(req, res, next) {
     next();
   }
 }
+*/
+
+// Middleware
+/*
+function authorize(req, res, next) {
+  if (
+    req.headers &&
+    req.headers.authorization &&
+    req.headers.authorization.split(" ")[0] === "Bearer"
+  ) {
+    const token = req.headers.authorization.split(" ")[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decode) => {
+      if (err) {
+        return res.status(401).json({ message: "Token invalide" });
+      }
+      req.user = decode;
+      next();
+    });
+  } else {
+    return res.status(401).json({ message: "Utilisateur non authentifié" });
+  }
+}
+*/
+
+async function authorize(req, res, next) {
+  const authHeader = req.headers.authorization;
+  //console.log(authHeader);
+  if (authHeader && authHeader.split(" ")[0] === "Bearer") {
+    // if (authHeader && authHeader.startsWith("Bearer ")) { //TODO
+    const token = authHeader.split(" ")[1];
+    const revokedToken = await RevokedToken.findOne({ token });
+    if (revokedToken) {
+      return res.status(401).json({ message: "Token révoqué" });
+    }
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decode) => {
+      if (err) {
+        return res.status(401).json({ message: "Token invalide" });
+      }
+      req.user = decode;
+      next();
+    });
+  } else {
+    return res.status(401).json({ message: "Utilisateur non authentifié" });
+  }
+}
 
 // Définir une route GET pour la racine de l'API
 postrouter.get("/", (req, res) => {
@@ -56,6 +105,7 @@ app.use("/", postrouter);
 app.use("/", userrouter);
 app.use(authorize);
 app.use("/", protectedrouter);
+app.use("/", protectedUserRouter);
 
 // Démarrer le serveur
 app.listen(PORT, () => {

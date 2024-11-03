@@ -2,7 +2,7 @@ const { validationResult } = require("express-validator");
 const {
   validateCreatePost,
   validateUpdatePost,
-  validatePostId,
+  validatePostId
 } = require("../validators");
 
 const {
@@ -16,13 +16,13 @@ const User = require("../models/User");
 const { generateAPIKey } = require("../controllers/user");
 
 // Middleware
-function login(req, res, next) {
+function loginRequiered(req, res, next) {
   if (!req.user) {
     res.status(401).json({
       message: "Unauthorized user, Please register a new account or login",
     });
   }
-  next();
+  next(); // Call the next middleware
 }
 
 // Middleware
@@ -43,24 +43,24 @@ async function apiKeyRequired(req, res, next) {
 }
 
 module.exports = (protectedrouter) => {
-  protectedrouter.post("/generateApiKey", login, generateAPIKey);
+  protectedrouter.post("/generateApiKey", loginRequiered, generateAPIKey);
   protectedrouter.post(
     "/posts/create",
-    login,
+    loginRequiered,
     apiKeyRequired,
     createPost,
     validateCreatePost
   );
   protectedrouter.patch(
     "/posts/update/:id",
-    login,
+    loginRequiered,
     apiKeyRequired,
     findOnePostAndUpdate,
     validateUpdatePost
   );
   protectedrouter.delete(
     "/posts/delete/:id",
-    login,
+    loginRequiered,
     apiKeyRequired,
     findOnePostAndDelete,
     validatePostId
