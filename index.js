@@ -9,8 +9,14 @@ const PORT = process.env.PORT;
 if (!PORT) {
   throw new Error("PORT is not defined in the environment variables"); //TODO throw new Error
 }
+
+const swaggerConfig = require("./swaggerConfig");
+const expressJSDocSwagger = require("express-jsdoc-swagger");
+const options = require("./swaggerConfig");
+
 //const data = require("./posts");
-const MONGODB_ATLAS_URI = process.env.MONGODB_ATLAS_URI;
+//TODO const MONGODB_ATLAS_URI = process.env.MONGODB_ATLAS_URI;
+
 // const router = express.Router();
 const postrouter = express.Router();
 const userrouter = express.Router();
@@ -26,6 +32,9 @@ require("./src/protected_routes/protectedposts")(protectedrouter);
 require("./src/protected_routes/protectedUserRoute")(protectedUserRouter);
 
 app.use(express.json()); // Middleware for parsing application/json
+
+// Appliquer la configuration Swagger
+expressJSDocSwagger(app)(options);
 
 // Middleware
 /*
