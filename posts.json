@@ -1,14 +1,18 @@
 [
     {
       "title": "Ancient Mystery Unveiled",
-      "content": "Embark on a quest to decipher the ancient runes and unlock the secrets of a long-lost civilization."
+      "content": "Embark on a quest to decipher the ancient runes and unlock the secrets of a long-lost civilization.",
+      "author": "John Doe"
     },
     {
       "title": "Space Odyssey Begins",
-      "content": "Launch into the cosmos and explore distant galaxies in this epic space adventure."
+      "content": "Launch into the cosmos and explore distant galaxies in this epic space adventure.",
+      "author": "Jane Doe"
+
     },
     {
       "title": "Magic Academy Opens Its Doors",
-      "content": "Enroll in the prestigious Magic Academy and master the arcane arts to become a legendary sorcerer."
+      "content": "Enroll in the prestigious Magic Academy and master the arcane arts to become a legendary sorcerer.",
+      "author": "Merlin the Wizard"
     }
   ]

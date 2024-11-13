@@ -9,11 +9,11 @@ const {
   createPost,
   findOnePostAndUpdate,
   findOnePostAndDelete,
-} = require("../controllers/post");
+} = require("../controllers/postController");
 
 const User = require("../models/User");
 
-const { generateAPIKey } = require("../controllers/user");
+const { generateAPIKey } = require("../controllers/userController");
 
 // Middleware
 function loginRequiered(req, res, next) {

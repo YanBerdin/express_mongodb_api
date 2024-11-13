@@ -2,20 +2,21 @@ const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const RevokedToken = require("./src/models/RevokedToken");
-const app = express();
+
 require("dotenv").config();
 //const Post = require("./models");
-const PORT = process.env.PORT;
-if (!PORT) {
-  throw new Error("PORT is not defined in the environment variables"); //TODO throw new Error
-}
+const PORT = process.env.PORT || 3000;
 
-const swaggerConfig = require("./swaggerConfig");
+//const swaggerConfig = require("./swaggerConfig");
 const expressJSDocSwagger = require("express-jsdoc-swagger");
 const options = require("./swaggerConfig");
 
 //const data = require("./posts");
 //TODO const MONGODB_ATLAS_URI = process.env.MONGODB_ATLAS_URI;
+
+const app = express();
+
+app.use(express.json()); // Middleware for parsing application/json
 
 // const router = express.Router();
 const postrouter = express.Router();
@@ -31,56 +32,8 @@ require("./src/routes/userroutes")(userrouter);
 require("./src/protected_routes/protectedposts")(protectedrouter);
 require("./src/protected_routes/protectedUserRoute")(protectedUserRouter);
 
-app.use(express.json()); // Middleware for parsing application/json
-
 // Appliquer la configuration Swagger
 expressJSDocSwagger(app)(options);
-
-// Middleware
-/*
-function authorize(req, res, next) {
-  if (
-    req.headers &&
-    req.headers.authorization &&
-    req.headers.authorization.split(" ")[0] === "Bearer"
-  ) {
-    jwt.verify(
-      req.headers.authorization.split(" ")[1],
-      process.env.TOKEN_SECRET,
-      function (err, decode) {
-        if (err) req.user = undefined;
-        req.user = decode;
-        next();
-      }
-    );
-  } else {
-    req.user = undefined;
-    next();
-  }
-}
-*/
-
-// Middleware
-/*
-function authorize(req, res, next) {
-  if (
-    req.headers &&
-    req.headers.authorization &&
-    req.headers.authorization.split(" ")[0] === "Bearer"
-  ) {
-    const token = req.headers.authorization.split(" ")[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, decode) => {
-      if (err) {
-        return res.status(401).json({ message: "Token invalide" });
-      }
-      req.user = decode;
-      next();
-    });
-  } else {
-    return res.status(401).json({ message: "Utilisateur non authentifié" });
-  }
-}
-*/
 
 async function authorize(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -105,18 +58,53 @@ async function authorize(req, res, next) {
 }
 
 // Définir une route GET pour la racine de l'API
+/**
+ * @openapi
+ * /:
+ *   get:
+ *     summary: Renvoie un message de bienvenue
+ *     description: Renvoie un message de bienvenue à l'utilisateur.
+ *     tags:
+ *       - Racine
+ *     responses:
+ *       200:
+ *         description: Message de bienvenue
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: string
+ *               example: Hello World!
+ *       400:
+ *         description: Requête incorrecte
+ *       401:
+ *         description: Utilisateur non authentifié
+ *       403:
+ *         description: Accès refusé
+ *       404:
+ *         description: Message de bienvenue introuvable
+ *       405:
+ *         description: Méthode non autorisée
+ *       409:
+ *         description: Conflit
+ *       429:
+ *         description: Trop de requêtes
+ *       500:
+ *         description: Erreur lors de la récupération du message de bienvenue
+ */
 postrouter.get("/", (req, res) => {
-  res.send("Hello Backend Express World!");
+  res.send("Hello API !");
+});
+postrouter.get("/api/docs", (req, res) => {
+  res.redirect("/api/docs");
 });
 
-// Utiliser le routeur
 app.use("/", postrouter);
 app.use("/", userrouter);
 app.use(authorize);
 app.use("/", protectedrouter);
 app.use("/", protectedUserRouter);
 
-// Démarrer le serveur
+// Connexion à la base de données et démarrage du serveur
 app.listen(PORT, () => {
   console.log(`Example app listening on PORT ${PORT}`);
   mongoose

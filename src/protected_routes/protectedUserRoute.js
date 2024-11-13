@@ -1,4 +1,4 @@
-const { generateAPIKey, logout } = require("../controllers/user");
+const { generateAPIKey, logout } = require("../controllers/userController");
 const User = require("../models/User");
 // const { authorize } = require("../../index");
 

@@ -1,5 +1,5 @@
 const { validateLogin, validateRegister } = require("../validators");
-const { register, login } = require("../controllers/user");
+const { register, login } = require("../controllers/userController");
 
 module.exports = (userrouter) => {
   /**
