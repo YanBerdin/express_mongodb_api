@@ -15,7 +15,7 @@ const User = require("../models/User");
 
 const { generateAPIKey } = require("../controllers/userController");
 
-// Middleware
+// Middleware loginRequiered :Check if the user is logged in
 function loginRequiered(req, res, next) {
   if (!req.user) {
     res.status(401).json({
@@ -25,7 +25,7 @@ function loginRequiered(req, res, next) {
   next(); // Call the next middleware
 }
 
-// Middleware
+// Middleware apiKeyRequired : Check if the user has an API key
 async function apiKeyRequired(req, res, next) {
   const apiKey = req.header("x-api-key");
   const users = await User.find({});
@@ -117,7 +117,7 @@ module.exports = (protectedrouter) => {
    * PATCH /posts/update/{id}
    * @summary Update an existing post
    * @tags Posts
-   * @param {string} id.path.required - Post ID
+   * @param {string} id.path.required - The unique ID of the post to be updated
    * @param {Post} request.body.required - Post information
    * @return {object} 200 - Post updated successfully
    * @example response - 200 - Example success response
@@ -165,7 +165,7 @@ module.exports = (protectedrouter) => {
    * DELETE /posts/delete/{id}
    * @summary Delete an existing post
    * @tags Posts
-   * @param {string} id.path.required - Post ID
+   * @param {string} id.path.required - The unique ID of the post to be deleted
    * @return {object} 200 - Post deleted successfully
    * @example response - 200 - Example success response
    * {

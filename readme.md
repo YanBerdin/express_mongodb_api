@@ -46,6 +46,10 @@ Vous pouvez gérer MongoDB via `systemctl` sur Linux pour le démarrer, arrêter
 sudo systemctl start mongodb
 ```
 
+## Documentation Swagger
+
+<http://localhost:3000/api/docs/>
+
 ## Routes de l'API
 
 ### Authentification et Gestion des Utilisateurs
