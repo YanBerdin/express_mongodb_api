@@ -1,8 +1,23 @@
 # Express MongoDB REST API
 
-- **Express**: Framework web pour créer des application web et des serveurs Node.js
-- **Mongodb**:  Base de données flexible, performante et adaptée à tous les cas d'utilisation.
-- **Mongoose**: Modélisation d’objets MongoDB pour Node.js. Mongoose fournit une solution, basée sur des schémas, pour modéliser les données. Il comprend le moulage de type intégré, la validation, Création de requêtes, crochets de logique métier.
+Cette API permet de gérer des utilisateurs et des posts avec une authentification JWT, MongoDB comme base de données, et un modèle de révocation de tokens pour renforcer la sécurité des sessions.
+
+## Technologies utilisées
+
+- **Express** : Framework pour créer des applications web et des serveurs Node.js.
+- **MongoDB** : Base de données NoSQL performante et flexible.
+- **Mongoose** : Modélisation d’objets MongoDB pour Node.js, avec schémas de données, validation, et support des requêtes.
+- **JWT (JsonWebToken)** : Pour l'authentification basée sur des tokens.
+- **dotenv** : Permet de charger les variables d’environnement à partir d’un fichier `.env`.
+
+## Installation
+
+Cloner le dépôt, puis installer les dépendances :
+
+```bash
+git clone <URL_DU_DEPOT>
+cd NOM_DU_PROJET
+```
 
 ## Installation des dépendances
 
