@@ -56,6 +56,7 @@ module.exports = (protectedrouter) => {
     loginRequiered,
     apiKeyRequired,
     findOnePostAndUpdate,
+    validatePostId,
     validateUpdatePost
   );
   protectedrouter.delete(

@@ -1,6 +1,6 @@
 # Express MongoDB REST API
 
-Cette API permet de gérer des utilisateurs et des posts avec une authentification JWT, MongoDB comme base de données, et un modèle de révoquation de tokens pour renforcer la sécurité des sessions.
+Cette API permet de gérer des utilisateurs et des posts avec une authentification JWT, MongoDB comme base de données, et un modèle de révocation de tokens pour renforcer la sécurité des sessions.
 
 ## Technologies utilisées
 

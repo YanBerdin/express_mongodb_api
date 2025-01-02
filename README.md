@@ -60,6 +60,10 @@ Quelques commandes pour gérer MongoDB sur un système Linux avec `systemctl` :
    sudo systemctl disable mongodb
    ```
 
+## Documentation Swagger
+
+<http://localhost:3000/api/docs/>
+
 ## Tester les requêtes pour les posts
 
 ### Envoi d'une requête GET à l'URL <http://localhost:3000/posts>

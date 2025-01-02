@@ -7,11 +7,9 @@ require("dotenv").config();
 //const Post = require("./models");
 const PORT = process.env.PORT || 3000;
 
-//const swaggerConfig = require("./swaggerConfig");
 const expressJSDocSwagger = require("express-jsdoc-swagger");
 const options = require("./swaggerConfig");
 
-//const data = require("./posts");
 //TODO const MONGODB_ATLAS_URI = process.env.MONGODB_ATLAS_URI;
 
 const app = express();
@@ -116,9 +114,7 @@ app.listen(PORT, () => {
       console.error("Error connecting to the database", err);
     });
   mongoose.connection.on("connected", () => console.log("connected"));
-  mongoose.connection.on("open", () => console.log("open"));
   mongoose.connection.on("disconnected", () => console.log("disconnected"));
   mongoose.connection.on("reconnected", () => console.log("reconnected"));
-  mongoose.connection.on("disconnecting", () => console.log("disconnecting"));
   mongoose.connection.on("close", () => console.log("close"));
 });

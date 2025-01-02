@@ -56,7 +56,8 @@ module.exports = {
             fullName: user.fullName,
             _id: user._id,
           },
-          process.env.TOKEN_SECRET
+          process.env.TOKEN_SECRET,
+          { expiresIn: "15m" }
         ),
       });
     } catch (error) {
@@ -102,12 +103,10 @@ module.exports = {
         res.status(401).json({ message: "Utilisateur non authentifié" });
       }
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          message: "Erreur lors de la déconnexion",
-          error: error.message,
-        });
+      res.status(500).json({
+        message: "Erreur lors de la déconnexion",
+        error: error.message,
+      });
     }
   },
 };
