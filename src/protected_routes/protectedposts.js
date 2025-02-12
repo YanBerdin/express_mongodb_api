@@ -147,16 +147,17 @@ module.exports = (protectedrouter) => {
    * PATCH /posts/update/{id}
    * @summary Update an existing post
    * @tags Posts
+   * @security BearerAuth
    * @param {string} id.path.required - The unique ID of the post to be updated
    * @param {Post} request.body.required - Post information
    * @return {object} 200 - Post updated successfully
    * @example response - 200 - Example success response
    * {
    *   "id": "612e123a4f1a4a23e4d12345",
-   *   "title": "Mon Premier Post Modifié",
-   *   "content": "Ceci est le contenu modifié du post.",
+   *   "title": "Post Modifié",
+   *   "content": "Contenu modifié du post.",
    *   "created_at": "2023-10-12T07:20:50.52Z",
-   *   "author": "John Doe"
+   *   "author": "Auteur Modifié"
    * }
    * @return {object} 400 - Validation error
    * @example response - 400 - Example error response

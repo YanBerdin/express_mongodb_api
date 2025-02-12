@@ -53,7 +53,7 @@ async function authorize(req, res, next) {
       next();
     });
   } else {
-    return res.status(401).json({ message: "Utilisateur non authentifié" });
+    return res.status(401).json({ message: "authorize:  Utilisateur non authentifié" });
   }
 }
 

@@ -55,19 +55,23 @@ module.exports = {
    *         description: Erreur serveur interne
    */
   async createPost(req, res) {
-    // console.log(">> POST /posts/create");
+    console.log(">> POST /posts/create", req.params.id); //TODO: Remove this line
+    console.log(
+      "createPost : ObjectId valide ?",
+      mongoose.Types.ObjectId.isValid(req.params.id)
+    ); //TODO: Remove this line
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
     try {
-      console.log(req.body);
+      console.log(req.body); //TODO: Remove this line
       const post = await new Post(req.body);
       await post.save();
       res.status(201).json(post); // Send the new post object as response
     } catch (error) {
-      console.log(error);
+      console.log(error); //TODO: Remove this line
       res.status(500).json({ message: "Erreur lors de la création du post" });
     }
   },
@@ -114,22 +118,14 @@ module.exports = {
     }
   },
 
-  //? findByIdAndUpdate
   /**
    * @openapi
    * /posts/update/{id}:
-   *   patch:
-   *     summary: Met à jour un post existant
-   *     description: Modifie un post en utilisant l'identifiant et les données envoyées dans la requête.
+   *   post:
+   *     summary: Modifie un post
+   *     description: Modifie un post en envoyant un objet avec le titre, le contenu (chaîne de caractères), et l'auteur.
    *     tags:
    *       - Posts
-   *     parameters:
-   *       - in: path
-   *         name: id
-   *         required: true
-   *         description: Identifiant du post à mettre à jour
-   *         schema:
-   *           type: string
    *     requestBody:
    *       required: true
    *       content:
@@ -148,17 +144,23 @@ module.exports = {
    */
   async findOnePostAndUpdate(req, res) {
     console.log(">> PATCH /posts/update/:id", req.params.id); //TODO: Remove this line
+    console.log(
+      "findOnePostAndUpdate : ObjectId valide ?",
+      mongoose.Types.ObjectId.isValid(req.params.id)
+    ); //TODO: Remove this line
     try {
       const query = { _id: req.params.id };
+
       const update = req.body;
-      console.log(req.body);
+      console.log(req.body); //TODO: Remove this line
+
       const post = await Post.findByIdAndUpdate(query, update);
 
       await post.save();
 
       res.send("new post successfully edited");
     } catch (error) {
-      console.log(error);
+      console.log(error); //TODO: Remove this line
       res.send(error);
     }
   },
@@ -194,7 +196,7 @@ module.exports = {
     console.log(
       "Est-ce un ObjectId valide ?",
       mongoose.Types.ObjectId.isValid(req.params.id)
-    );
+    ); // TODO: Remove this line
     try {
       const query = { _id: req.params.id };
 
