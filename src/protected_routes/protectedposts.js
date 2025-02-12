@@ -16,9 +16,34 @@ const User = require("../models/User");
 
 //const { generateAPIKey } = require("../controllers/userController");
 
-// Middleware loginRequiered :Check if the user is logged in
-function loginRequiered(req, res, next) {
-  console.log("Middleware loginRequiered appelé"); //TODO: Remove
+// Middleware loginRequired :Check if the user is logged in
+/*
+function loginRequired(req, res, next) {
+  console.log("Authorization header:", req.headers.authorization); // Débogage
+
+  if (!req.headers.authorization) {
+    return res.status(401).json({ message: "Token manquant ou invalide" });
+  }
+
+  const token = req.headers.authorization.split(" ")[1]; // Extraire le token
+
+  if (!token) {
+    return res.status(401).json({ message: "Token manquant ou invalide" });
+  }
+
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: "Token invalide" });
+    }
+
+    req.user = user;
+    next();
+  });
+}
+*/
+
+function loginRequired(req, res, next) {
+  console.log("Middleware loginRequired appelé"); //TODO: Remove
   if (!req.user) {
     res.status(401).json({
       message: "Unauthorized user, Please register a new account or login",
@@ -62,12 +87,13 @@ module.exports = (protectedrouter) => {
    *   "message": "Unauthorized user, Please register a new account or login"
    * }
    */
-  // protectedrouter.post("/generateApiKey", loginRequiered, generateAPIKey);
+  // protectedrouter.post("/generateApiKey", loginRequired, generateAPIKey);
 
   /**
    * POST /posts/create
    * @summary Create a new post
    * @tags Posts
+   * @security BearerAuth
    * @param {Post} request.body.required - Post information
    * @return {object} 201 - Post created successfully
    * @example response - 201 - Example success response
@@ -112,7 +138,7 @@ module.exports = (protectedrouter) => {
    */
   protectedrouter.post(
     "/posts/create",
-    loginRequiered,
+    loginRequired,
     // apiKeyRequired,
     createPost,
     validateCreatePost
@@ -159,7 +185,7 @@ module.exports = (protectedrouter) => {
 
   protectedrouter.patch(
     "/posts/update/:id",
-    loginRequiered,
+    loginRequired,
     // apiKeyRequired,
     findOnePostAndUpdate,
     validatePostId,
@@ -202,7 +228,7 @@ module.exports = (protectedrouter) => {
       ); //TODO: Remove
       next();
     },
-    //loginRequiered, //? Pas besoin de loginRequiered pour supprimer un post ???
+    loginRequired,
     // apiKeyRequired,
     validatePostId,
     findOnePostAndDelete

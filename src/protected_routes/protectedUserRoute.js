@@ -3,8 +3,8 @@ const { logout } = require("../controllers/userController"); // {generateAPIKey}
 const User = require("../models/User");
 
 // Middleware
-function loginRequiered(req, res, next) {
-  console.log('Authorization header:', req.headers); //TODO: Remove
+function loginRequired(req, res, next) {
+  console.log("Authorization header:", req.headers); //TODO: Remove
   if (!req.user) {
     res.status(401).json({
       message: "Unauthorized user, Please register a new account or login",
@@ -15,14 +15,14 @@ function loginRequiered(req, res, next) {
 
 /*
 module.exports = (protectedUserRouter) => {
-  protectedUserRouter.post("/generateApiKey", loginRequiered, generateAPIKey);
+  protectedUserRouter.post("/generateApiKey", loginRequired, generateAPIKey);
   protectedUserRouter.post(
     "/auth/logout",
-    loginRequiered,
+    loginRequired,
     apiKeyRequired,
     logout
   );
 */
 module.exports = (protectedUserRouter) => {
-  protectedUserRouter.post("/auth/logout", loginRequiered, logout);
+  protectedUserRouter.post("/auth/logout", loginRequired, logout);
 };

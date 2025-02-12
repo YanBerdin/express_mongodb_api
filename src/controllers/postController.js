@@ -66,11 +66,9 @@ module.exports = {
       const post = await new Post(req.body);
       await post.save();
       res.status(201).json(post); // Send the new post object as response
-      res.send("new post successfully added");
     } catch (error) {
       console.log(error);
-      res.send(error);
-      // res.status(500).json({ message: 'Erreur lors de la création du post' });
+      res.status(500).json({ message: "Erreur lors de la création du post" });
     }
   },
 
@@ -185,11 +183,11 @@ module.exports = {
    *   responses:
    *      '200':
    *         description: 'Will send `Authenticated`'
-   *       '403': 
+   *       '403':
    *         description: 'You do not have necessary permissions for the *       resource'
    *   security:
    *        - Bearer: []
-   * 
+   *
    */
   async findOnePostAndDelete(req, res) {
     console.log(">> DELETE /posts/delete/:id", req.params.id); //TODO: Remove this line
