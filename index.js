@@ -35,7 +35,9 @@ expressJSDocSwagger(app)(options);
 
 async function authorize(req, res, next) {
   const authHeader = req.headers.authorization;
-  //console.log(authHeader);
+  console.log(req.headers); //TODO Remove
+  console.log(req.headers.authorization); //TODO Remove
+
   if (authHeader && authHeader.split(" ")[0] === "Bearer") {
     // if (authHeader && authHeader.startsWith("Bearer ")) { //TODO
     const token = authHeader.split(" ")[1];
@@ -90,17 +92,26 @@ async function authorize(req, res, next) {
  *         description: Erreur lors de la récupération du message de bienvenue
  */
 postrouter.get("/", (req, res) => {
-  res.send("Hello API !");
-});
+  res.send('<h1> Hello API !</h1> <a href="/api/docs">Documentation</a>'); //TODO: Remove Html
+      // res.send('Hello API ! documentation: /api/docs');
+
+  });
+
 postrouter.get("/api/docs", (req, res) => {
-  res.redirect("/api/docs");
+ // res.redirect("/api/docs");
 });
 
 app.use("/", postrouter);
 app.use("/", userrouter);
-app.use(authorize);
-app.use("/", protectedrouter);
-app.use("/", protectedUserRouter);
+app.use("/", authorize, protectedrouter);
+app.use("/", authorize, protectedUserRouter);
+
+/*
+if (!process.env.MONGODB_URI) {
+  console.error("❌ Erreur : MONGODB_URI non définie dans .env");
+  process.exit(1);
+}
+*/
 
 // Connexion à la base de données et démarrage du serveur
 app.listen(PORT, () => {
@@ -118,3 +129,23 @@ app.listen(PORT, () => {
   mongoose.connection.on("reconnected", () => console.log("reconnected"));
   mongoose.connection.on("close", () => console.log("close"));
 });
+
+/*
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log("✅ Connexion à la base de données réussie");
+    app.listen(PORT, () => {
+      console.log(`🚀 Serveur en ligne sur le port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ Échec de la connexion à la base de données", err);
+    //process.exit(1);
+  });
+
+mongoose.connection.on("connected", () => console.log("🔗 MongoDB : connecté"));
+mongoose.connection.on("disconnected", () => console.log("🔌 MongoDB : déconnecté"));
+mongoose.connection.on("reconnected", () => console.log("♻️ MongoDB : reconnecté"));
+mongoose.connection.on("close", () => console.log("❎ MongoDB : connexion fermée"));
+*/

@@ -32,7 +32,6 @@ module.exports = {
       res.send(error);
     }
   },
-  
   /**
    * @openapi
    * /posts/create:
@@ -101,7 +100,7 @@ module.exports = {
    *         description: Post introuvable
    */
   async findOnePost(req, res) {
-    // console.log(">> GET /posts/:id");
+    console.log(">> GET /posts/:id", req.params.id); //TODO: Remove this line
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -109,6 +108,7 @@ module.exports = {
 
     try {
       const post = await Post.findOne({ _id: req.params.id });
+      //console.log(">> GET /posts/:id", req.params.id);
       res.send(post);
     } catch {
       res.status(404);
@@ -149,7 +149,7 @@ module.exports = {
    *         description: Erreur serveur interne
    */
   async findOnePostAndUpdate(req, res) {
-    // console.log(">> PATCH /posts/update/:id");
+    console.log(">> PATCH /posts/update/:id", req.params.id); //TODO: Remove this line
     try {
       const query = { _id: req.params.id };
       const update = req.body;
@@ -168,26 +168,52 @@ module.exports = {
   /**
    * @openapi
    * /posts/delete/{id}:
-   *   delete:
-   *     summary: Supprime un post existant
-   *     description: Supprime un post de la base de données en fonction de l'identifiant.
-   *     tags:
+   *     @tags
    *       - Posts
-   *     parameters:
-   *       - in: path
-   *         name: id
-   *         required: true
-   *         description: Identifiant du post à supprimer
-   *         schema:
-   *           type: string
-   *     responses:
-   *       200:
-   *         description: Post supprimé avec succès
-   *       404:
-   *         description: Post introuvable
-   *       500:
-   *         description: Erreur serveur interne
+   *     description: Delete an existing post by Id
+   *     operationId: deletePost
+   * schemes:
+   *   - http
+   *   - https
+   * securityDefinitions:
+   *   Bearer:
+   *   type: apiKey
+   *     name: Authorization
+   *     in: header
+   *     description: >-
+   *       Enter the token with the `Bearer: ` prefix, e.g. "Bearer abcde12345".
+   *   responses:
+   *      '200':
+   *         description: 'Will send `Authenticated`'
+   *       '403': 
+   *         description: 'You do not have necessary permissions for the *       resource'
+   *   security:
+   *        - Bearer: []
+   * 
    */
+  async findOnePostAndDelete(req, res) {
+    console.log(">> DELETE /posts/delete/:id", req.params.id); //TODO: Remove this line
+    console.log(
+      "Est-ce un ObjectId valide ?",
+      mongoose.Types.ObjectId.isValid(req.params.id)
+    );
+    try {
+      const query = { _id: req.params.id };
+
+      const deletedPost = await Post.findOneAndDelete(query);
+
+      if (!deletedPost) {
+        return res.status(404).json({ message: "Post introuvable" });
+      }
+
+      return res.status(200).json({ message: "Post supprimé avec succès" });
+    } catch (error) {
+      console.error("Erreur lors de la suppression :", error);
+      return res.status(500).json({ message: "Erreur serveur", error });
+    }
+  },
+
+  /*
   async findOnePostAndDelete(req, res) {
     // console.log(">> DELETE /posts/delete/:id");
     try {
@@ -199,4 +225,22 @@ module.exports = {
       res.send(error);
     }
   },
+*/
 };
+/*
+  async findOnePost(req, res) {
+    // console.log(">> GET /posts/:id");
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const post = await Post.findOne({ _id: req.params.id });
+      res.send(post);
+    } catch {
+      res.status(404);
+      res.send({ error: "Post doesn't exist!" });
+    }
+  },
+*/

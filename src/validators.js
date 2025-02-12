@@ -1,4 +1,5 @@
 const { check } = require("express-validator"); //
+const { param } = require("express-validator");
 
 const validateLogin = [
   check("email")
@@ -22,7 +23,7 @@ const validateRegister = [
     .withMessage("Password must contain at least one uppercase letter")
     .matches(/[!@#$%^&*(),.?":{}|<>]/)
     .withMessage("Password must contain at least one special character"),
-    /*
+  /*
     check("age")
     .isInt({ min: 18, max: 99 })
     .withMessage("Age must be between 18 and 99"),
@@ -35,14 +36,32 @@ const validateRegister = [
     .withMessage("isAdmin must be a boolean")
     */
 ];
-
+/*
 const validatePostId = [
   check("id").isMongoId().withMessage("Invalid post ID").trim().escape(),
 ];
-/* // TODO
-const validateMongoId = (fieldName = "id") =>
-  check(fieldName).isMongoId().withMessage(`Invalid ${fieldName}`).trim().escape();
 */
+/*
+const validatePostId = [
+  check("id", "Invalid post ID") // Vérifie dans le body ?
+    .isMongoId()
+    .trim()
+    .escape()
+    .custom((value, { req }) => {
+      if (!req.params.id) {
+        throw new Error("Post ID must be in the URL parameters");
+      }
+      return true;
+    }),
+];
+*/
+const validatePostId = [
+  param("id", "Invalid post ID") // Vérifie bien req.params.id
+    .isMongoId()
+    .withMessage("L'ID fourni n'est pas un ObjectId valide")
+    .trim()
+    .escape(),
+];
 
 const validateField = (fieldName, required = false) =>
   required

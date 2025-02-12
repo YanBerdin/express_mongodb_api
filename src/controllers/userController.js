@@ -39,7 +39,7 @@ module.exports = {
 
     try {
       const user = await User.findOne({ email: req.body.email });
-
+      console.log("Login => user", user); //TODO: Remove this line
       if (!user) {
         res.status(401).json("No user account found");
       }
@@ -64,28 +64,34 @@ module.exports = {
       res.json(error);
     }
   },
-
+  /*
   async generateAPIKey(req, res) {
     try {
       const user = await User.findOne({ email: req.user.email });
       user.setAPIKey();
       await user.save();
+      res.setHeader("x-api-key", user.apiKey); // Ajouter l'API key au header
+      console.log("API key generated: ", user.apiKey); //TODO: Remove this line
+      console.log(req.headers); //TODO: Remove this line
       res.json({ apikey: user.apiKey });
     } catch (error) {
       res.json(error);
     }
   },
+*/
 
   async logout(req, res) {
     try {
       const user = req.user; // User extrait du token JWT
       if (user) {
         const authHeader = req.headers.authorization;
+        console.log("authHeader", authHeader); //TODO: Remove this line
         if (authHeader && authHeader.startsWith("Bearer ")) {
           const token = authHeader.split(" ")[1];
           await RevokedToken.create({ token }); // Ajouter le jeton à la liste de révocation en BDD
         }
-        // Si sessions, détruire la session
+        // Si sessions, détruire la session //TODO: 
+        //! Remove session condition
         if (req.session) {
           req.session.destroy((err) => {
             if (err) {

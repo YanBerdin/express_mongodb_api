@@ -26,6 +26,7 @@ const options = {
       BearerAuth: {
         type: "http",
         scheme: "bearer",
+        bearerFormat: "JWT" // spécifie le format du token
       },
     },
     schemas: {

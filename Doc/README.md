@@ -275,3 +275,8 @@ http://localhost:3000/auth/logout \
 -d '{}'
 
 ```
+
+#### Infos swagger
+
+Bouton Authorize : sans guillemet, sans nom de clé (Bearer, Token ...), le JWT only
+ID : sans guillemet, sans nom de clé (Bearer, Token ...), l'ID only

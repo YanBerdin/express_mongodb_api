@@ -1,4 +1,5 @@
 const { validationResult } = require("express-validator");
+
 const {
   validateCreatePost,
   validateUpdatePost,
@@ -10,13 +11,14 @@ const {
   findOnePostAndUpdate,
   findOnePostAndDelete,
 } = require("../controllers/postController");
-
+//const apiKeyRequired = require("../middlewares/apiKeyRequired");
 const User = require("../models/User");
 
-const { generateAPIKey } = require("../controllers/userController");
+//const { generateAPIKey } = require("../controllers/userController");
 
 // Middleware loginRequiered :Check if the user is logged in
 function loginRequiered(req, res, next) {
+  console.log("Middleware loginRequiered appelé"); //TODO: Remove
   if (!req.user) {
     res.status(401).json({
       message: "Unauthorized user, Please register a new account or login",
@@ -25,6 +27,7 @@ function loginRequiered(req, res, next) {
   next(); // Call the next middleware
 }
 
+/*
 // Middleware apiKeyRequired : Check if the user has an API key
 async function apiKeyRequired(req, res, next) {
   const apiKey = req.header("x-api-key");
@@ -41,6 +44,7 @@ async function apiKeyRequired(req, res, next) {
 
   next();
 }
+*/
 
 module.exports = (protectedrouter) => {
   /**
@@ -58,7 +62,7 @@ module.exports = (protectedrouter) => {
    *   "message": "Unauthorized user, Please register a new account or login"
    * }
    */
-  protectedrouter.post("/generateApiKey", loginRequiered, generateAPIKey);
+  // protectedrouter.post("/generateApiKey", loginRequiered, generateAPIKey);
 
   /**
    * POST /posts/create
@@ -109,7 +113,7 @@ module.exports = (protectedrouter) => {
   protectedrouter.post(
     "/posts/create",
     loginRequiered,
-    apiKeyRequired,
+    // apiKeyRequired,
     createPost,
     validateCreatePost
   );
@@ -152,10 +156,11 @@ module.exports = (protectedrouter) => {
    *   "message": "Post not found"
    * }
    */
+
   protectedrouter.patch(
     "/posts/update/:id",
     loginRequiered,
-    apiKeyRequired,
+    // apiKeyRequired,
     findOnePostAndUpdate,
     validatePostId,
     validateUpdatePost
@@ -165,7 +170,8 @@ module.exports = (protectedrouter) => {
    * DELETE /posts/delete/{id}
    * @summary Delete an existing post
    * @tags Posts
-   * @param {string} id.path.required - The unique ID of the post to be deleted
+   * @security BearerAuth
+   * @param {string} id.path.required - The unique ID of the post to be deleted:
    * @return {object} 200 - Post deleted successfully
    * @example response - 200 - Example success response
    * {
@@ -189,9 +195,16 @@ module.exports = (protectedrouter) => {
    */
   protectedrouter.delete(
     "/posts/delete/:id",
-    loginRequiered,
-    apiKeyRequired,
-    findOnePostAndDelete,
-    validatePostId
+    (req, res, next) => {
+      console.log(
+        "Route DELETE /posts/delete/:id atteinte avec ID:",
+        req.params.id
+      ); //TODO: Remove
+      next();
+    },
+    //loginRequiered, //? Pas besoin de loginRequiered pour supprimer un post ???
+    // apiKeyRequired,
+    validatePostId,
+    findOnePostAndDelete
   );
 };
