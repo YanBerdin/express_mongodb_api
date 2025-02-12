@@ -168,8 +168,7 @@ module.exports = {
   /**
    * @openapi
    * /posts/delete/{id}:
-   *     @tags
-   *       - Posts
+   *   - Posts
    *     description: Delete an existing post by Id
    *     operationId: deletePost
    * schemes:

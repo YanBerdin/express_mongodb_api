@@ -183,7 +183,6 @@ module.exports = (protectedrouter) => {
    *   "message": "Post not found"
    * }
    */
-
   protectedrouter.patch(
     "/posts/update/:id",
     loginRequired,
