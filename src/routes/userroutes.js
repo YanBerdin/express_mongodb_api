@@ -67,23 +67,7 @@ module.exports = (userrouter) => {
    * {
    * "message": "Unauthorized"
    * }
-   * @return {object} 500 - Server error
-   * @example response - 500 - Example server error response
-   * {
-   * "message": "Server error"
-   * }
-   * @return {object} 404 - Not found
-   * @example response - 404 - Example not found response
-   * {
-   * "message": "Not found"
-   * }
-   * @return {object} 403 - Forbidden
-   * @example response - 403 - Example forbidden response
-   * {
-   * "message": "Forbidden"
-   * }
    */
-
   /**
    * @typedef {object} LoginRequest
    * @property {string} email.required - User's email

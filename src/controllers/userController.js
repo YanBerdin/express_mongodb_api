@@ -11,6 +11,22 @@ const saltRounds = 10; // Number of rounds to generate salt
 const salt = bcrypt.genSaltSync(saltRounds); // Generate salt
 
 module.exports = {
+  /**
+   * @route POST /auth/register
+   * @summary Register a new user
+   * @tags Auth
+   * @param {RegisterRequest} request.body.required - User's information
+   * @return {object} 201 - Successful registration response
+   * @example response - 201 - Example success response
+   * {
+   *  "message": "User registered successfully",
+   * "user": {
+   *  "email": "JohnDoe@gmail.com"
+   * "fullName": "John Doe",
+   * "_id": "12345"
+   * }
+   * }
+   */
   async register(req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -80,6 +96,43 @@ module.exports = {
   },
 */
 
+  /**
+   * @route POST /auth/logout
+   * @summary User logout
+   * @tags Auth
+   * @return {object} 200 - Successful logout response
+   * @example response - 200 - Example success response
+   * {
+   * "message": "User logged out successfully"
+   * }
+   */
+  async logout(req, res) {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return res.status(400).json({ message: "Token manquant ou invalide" });
+      }
+
+      const token = authHeader.split(" ")[1];
+
+      const existingRevokedToken = await RevokedToken.findOne({ token });
+      if (existingRevokedToken) {
+        return res.status(400).json({ message: "Token déjà révoqué" });
+      }
+
+      // Ajouter le token à la liste des tokens révoqués
+      await RevokedToken.create({ token });
+
+      res.status(200).json({ message: "Déconnexion réussie" });
+    } catch (error) {
+      res.status(500).json({
+        message: "Erreur lors de la déconnexion",
+        error: error.message,
+      });
+    }
+  },
+
+  /*
   async logout(req, res) {
     try {
       const user = req.user; // User extrait du token JWT
@@ -115,4 +168,5 @@ module.exports = {
       });
     }
   },
+  */
 };

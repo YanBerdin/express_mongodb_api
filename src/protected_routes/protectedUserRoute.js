@@ -13,6 +13,19 @@ module.exports = (protectedUserRouter) => {
     logout
   );
 */
+
+  /**
+   * POST /auth/logout
+   * @summary User logout
+   * @tags Auth
+   * @security BearerAuth
+   * @return {object} 200 - Successful logout response
+   * @example response - 200 - Example success response
+   * {
+   *  "message": "User logged out successfully"
+   * }
+   * 
+   * */
 module.exports = (protectedUserRouter) => {
   protectedUserRouter.post("/auth/logout", loginRequired, logout);
 };
