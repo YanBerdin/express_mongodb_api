@@ -4,24 +4,10 @@ const { validationResult } = require("express-validator");
 
 module.exports = {
   /**
-   * @openapi
-   * /posts:
-   *   get:
-   *     summary: Récupère tous les posts
-   *     description: Renvoie une liste de tous les posts présents dans la base de données.
-   *     tags:
-   *       - Posts
-   *     responses:
-   *       200:
-   *         description: Liste des posts
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: array
-   *               items:
-   *                 $ref: '#/components/schemas/Post'
-   *       500:
-   *         description: Erreur serveur interne
+   * @route GET /posts
+   * @summary Returns a list of posts
+   * @tags Posts
+   * @returns {Array<Post>} 200 - Success response with an array of posts
    */
   async findPosts(req, res) {
     // console.log(">> GET /posts");
@@ -32,34 +18,15 @@ module.exports = {
       res.send(error);
     }
   },
+
   /**
-   * @openapi
-   * /posts/create:
-   *   post:
-   *     summary: Crée un nouveau post
-   *     description: Crée un post en envoyant un objet avec le titre, le contenu (chaîne de caractères), et l'auteur.
-   *     tags:
-   *       - Posts
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             $ref: '#/components/schemas/Post'
-   *     responses:
-   *       201:
-   *         description: Post créé avec succès
-   *       400:
-   *         description: Données manquantes ou incorrectes
-   *       500:
-   *         description: Erreur serveur interne
+   * @route POST /posts/create
+   * @summary Create a new post
+   * @tags Posts
+   * @returns {Post} 201 - New post object
    */
   async createPost(req, res) {
     console.log(">> POST /posts/create", req.params.id); //TODO: Remove this line
-    console.log(
-      "createPost : ObjectId valide ?",
-      mongoose.Types.ObjectId.isValid(req.params.id)
-    ); //TODO: Remove this line
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -77,29 +44,12 @@ module.exports = {
   },
 
   /**
-   * @openapi
-   * /posts/{id}:
-   *   get:
-   *     summary: Récupère un post par son identifiant
-   *     description: Renvoie un post spécifique en fonction de l'identifiant fourni.
-   *     tags:
-   *       - Posts
-   *     parameters:
-   *       - in: path
-   *         name: id
-   *         required: true
-   *         description: Identifiant du post à récupérer
-   *         schema:
-   *           type: string
-   *     responses:
-   *       200:
-   *         description: Détails du post
-   *         content:
-   *           application/json:
-   *             schema:
-   *               $ref: '#/components/schemas/Post'
-   *       404:
-   *         description: Post introuvable
+   * @route GET /posts/{id}
+   * @summary Returns a post by ID
+   * @tags Posts
+   * @param {string} id.path.required - ID param
+   * @returns {Post} 200 - Post details
+   * @returns {object} 404 - Post not found
    */
   async findOnePost(req, res) {
     console.log(">> GET /posts/:id", req.params.id); //TODO: Remove this line
@@ -119,28 +69,18 @@ module.exports = {
   },
 
   /**
-   * @openapi
-   * /posts/update/{id}:
-   *   post:
-   *     summary: Modifie un post
-   *     description: Modifie un post en envoyant un objet avec le titre, le contenu (chaîne de caractères), et l'auteur.
-   *     tags:
-   *       - Posts
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             $ref: '#/components/schemas/Post'
-   *     responses:
-   *       200:
-   *         description: Post mis à jour avec succès
-   *       400:
-   *         description: Données incorrectes ou manquantes
-   *       404:
-   *         description: Post introuvable
-   *       500:
-   *         description: Erreur serveur interne
+   * @route PATCH /posts/update/{id}
+   * @summary Update an existing post by Id
+   * @tags Posts
+   * @security BearerAuth
+   * @param {string} id.path.required - The unique ID of the post to be updated
+   * @param {Post} request.body.required - Post information
+   * @returns {Post} 200 - Post updated successfully
+   * @returns {object} 400 - Validation error
+   * @returns {object} 401 - Unauthorized
+   * @returns {object} 403 - Forbidden
+   * @returns {object} 404 - Post not found
+   * @returns {object} 500 - Internal server error
    */
   async findOnePostAndUpdate(req, res) {
     console.log(">> PATCH /posts/update/:id", req.params.id); //TODO: Remove this line
@@ -166,29 +106,20 @@ module.exports = {
   },
 
   /**
-   * @openapi
-   * /posts/delete/{id}:
-   *   - Posts
-   *     description: Delete an existing post by Id
-   *     operationId: deletePost
-   * schemes:
-   *   - http
-   *   - https
-   * securityDefinitions:
-   *   Bearer:
-   *   type: apiKey
-   *     name: Authorization
-   *     in: header
-   *     description: >-
-   *       Enter the token with the `Bearer: ` prefix, e.g. "Bearer abcde12345".
-   *   responses:
-   *      '200':
-   *         description: 'Will send `Authenticated`'
-   *       '403':
-   *         description: 'You do not have necessary permissions for the *       resource'
-   *   security:
-   *        - Bearer: []
-   *
+   * @route DELETE /posts/delete/{id}
+   * @summary Delete an existing post
+   * @tags Posts
+   * @security BearerAuth
+   * @param {string} id.path.required - The unique ID of the post to be deleted
+   * @returns {object} 200 - Post deleted successfully
+   * @returns {object} 401 - Unauthorized
+   * @returns {object} 403 - Forbidden
+   * @returns {object} 404 - Post not found
+   * @returns {object} 500 - Internal server error
+   * @example response - 200 - Example success response
+   * {
+   *  "message": "Post deleted successfully"
+   * }
    */
   async findOnePostAndDelete(req, res) {
     console.log(">> DELETE /posts/delete/:id", req.params.id); //TODO: Remove this line
@@ -226,20 +157,3 @@ module.exports = {
   },
 */
 };
-/*
-  async findOnePost(req, res) {
-    // console.log(">> GET /posts/:id");
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    try {
-      const post = await Post.findOne({ _id: req.params.id });
-      res.send(post);
-    } catch {
-      res.status(404);
-      res.send({ error: "Post doesn't exist!" });
-    }
-  },
-*/

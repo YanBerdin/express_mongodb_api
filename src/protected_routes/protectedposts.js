@@ -11,84 +11,12 @@ const {
   findOnePostAndUpdate,
   findOnePostAndDelete,
 } = require("../controllers/postController");
-//const apiKeyRequired = require("../middlewares/apiKeyRequired");
+
 const User = require("../models/User");
 
-//const { generateAPIKey } = require("../controllers/userController");
-
-// Middleware loginRequired :Check if the user is logged in
-/*
-function loginRequired(req, res, next) {
-  console.log("Authorization header:", req.headers.authorization); // Débogage
-
-  if (!req.headers.authorization) {
-    return res.status(401).json({ message: "Token manquant ou invalide" });
-  }
-
-  const token = req.headers.authorization.split(" ")[1]; // Extraire le token
-
-  if (!token) {
-    return res.status(401).json({ message: "Token manquant ou invalide" });
-  }
-
-  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).json({ message: "Token invalide" });
-    }
-
-    req.user = user;
-    next();
-  });
-}
-*/
-
-function loginRequired(req, res, next) {
-  console.log("Middleware loginRequired appelé"); //TODO: Remove
-  if (!req.user) {
-    res.status(401).json({
-      message: "Unauthorized user, Please register a new account or login",
-    });
-  }
-  next(); // Call the next middleware
-}
-
-/*
-// Middleware apiKeyRequired : Check if the user has an API key
-async function apiKeyRequired(req, res, next) {
-  const apiKey = req.header("x-api-key");
-  const users = await User.find({});
-  console.log("apiKeyRequired", users);
-  const account = users.find((user) => user.apiKey === apiKey);
-  console.log(account);
-  if (!apiKey || !account) {
-    return res.status(403).json({
-      code: 403,
-      message: "You are not allowed. Register for a new Api key",
-    });
-  }
-
-  next();
-}
-*/
+const loginRequired = require("../middlewares/loginRequired");
 
 module.exports = (protectedrouter) => {
-  /**
-   * POST /generateApiKey
-   * @summary Generate a new API key
-   * @tags Auth
-   * @return {object} 200 - Successful response
-   * @example response - 200 - Example success response
-   * {
-   *   "apiKey": "abcd1234efgh5678ijkl9101"
-   * }
-   * @return {object} 401 - Unauthorized
-   * @example response - 401 - Example unauthorized response
-   * {
-   *   "message": "Unauthorized user, Please register a new account or login"
-   * }
-   */
-  // protectedrouter.post("/generateApiKey", loginRequired, generateAPIKey);
-
   /**
    * POST /posts/create
    * @summary Create a new post
@@ -125,11 +53,11 @@ module.exports = (protectedrouter) => {
    */
 
   /**
-   * @typedef {object} Post
+   * @typedef {object} Post - Post information
    * @property {string} title.required - Title of the post
    * @property {string} content.required - Content of the post
    * @property {string} author.required - Author of the post
-   * @example
+   * @example request - Example post
    * {
    *  "title": "Mon Premier Post",
    * "content": "Ceci est le contenu du post.",
@@ -140,8 +68,8 @@ module.exports = (protectedrouter) => {
     "/posts/create",
     loginRequired,
     // apiKeyRequired,
-    createPost,
-    validateCreatePost
+    validateCreatePost,
+    createPost
   );
   /**
    * PATCH /posts/update/{id}
@@ -187,9 +115,9 @@ module.exports = (protectedrouter) => {
     "/posts/update/:id",
     loginRequired,
     // apiKeyRequired,
-    findOnePostAndUpdate,
     validatePostId,
-    validateUpdatePost
+    validateUpdatePost,
+    findOnePostAndUpdate
   );
 
   /**
@@ -233,4 +161,21 @@ module.exports = (protectedrouter) => {
     validatePostId,
     findOnePostAndDelete
   );
+
+   /**
+   //  * POST /generateApiKey
+   //  * @summary Generate a new API key
+   //  * @tags Auth
+   //  * @return {object} 200 - Successful response
+   //  * @example response - 200 - Example success response
+   * {
+   *   "apiKey": "abcd1234efgh5678ijkl9101"
+   * }
+  // * @return {object} 401 - Unauthorized
+  // * @example response - 401 - Example unauthorized response
+   * {
+   *   "message": "Unauthorized user, Please register a new account or login"
+   * }
+   */
+  // protectedrouter.post("/generateApiKey", loginRequired, generateAPIKey);
 };

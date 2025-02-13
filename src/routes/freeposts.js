@@ -1,10 +1,7 @@
 const { validationResult } = require("express-validator");
 const { validatePostId } = require("../validators");
 
-const {
-  findPosts,
-  findOnePost,
-} = require("../controllers/postController");
+const { findPosts, findOnePost } = require("../controllers/postController");
 
 module.exports = (postrouter) => {
   /**
@@ -22,12 +19,9 @@ module.exports = (postrouter) => {
    *     "author": "John Doe"
    *   }
    * ]
-   * @response 500 - Internal server error
-   * @response 404 - Post not found
    */
   postrouter.get("/posts", findPosts);
 
-  //! @return {object} et pas {array<Post>} => le type array n'est pas supporté
   /**
    * GET /posts/{id}
    * @summary Returns a post by ID
@@ -40,11 +34,6 @@ module.exports = (postrouter) => {
    * "content": "This is the content of the post.",
    * "created_at": "2023-10-12T07:20:50.52Z",
    * "author": "John Doe"
-   * }
-   * @return {object} 404 - Post introuvable
-   * @example response - 404 - Post introuvable
-   * {
-   * "error": "Post doesn't exist!"
    * }
    */
   postrouter.get("/posts/:id", validatePostId, findOnePost);
