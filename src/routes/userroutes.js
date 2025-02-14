@@ -7,11 +7,20 @@ module.exports = (userrouter) => {
    * @summary Register a new user
    * @tags Auth
    * @param {RegisterRequest} request.body.required - User's information
-   * @return {object} 200 - Successful registration response
-   * @example response - 200 - Example success response
+   * @return {object} 201 - Successful registration response
+   * @example response - 201 - Example success response
    * {
-   *   "message": "User registered successfully",
-   *   "userId": "12345"
+   * "message": "User registered successfully",
+   *   "user": {
+   *     "firstName": "Capitaine",
+   *     "lastName": "Flame",
+   *     "username": "Flame2026",
+   *     "email": "flame2026@free.fr",
+   *     "_id": "67ae8def466442048a96fa22",
+   *     "created_at": "2025-02-14T00:27:27.277Z",
+   *     "apiKey": "$2b$10$ArHVzMqjv8aNdKcLSoSxT.kPK/lLEp4aeLCk9BwYA9UMzdgVOfiQW",
+   *     "__v": 0
+   *   }
    * }
    * @return {object} 400 - Validation error
    * @example response - 400 - Example error response

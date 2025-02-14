@@ -17,15 +17,6 @@ module.exports = {
    * @tags Auth
    * @param {RegisterRequest} request.body.required - User's information
    * @return {object} 201 - Successful registration response
-   * @example response - 201 - Example success response
-   * {
-   *  "message": "User registered successfully",
-   * "user": {
-   *  "email": "JohnDoe@gmail.com"
-   * "fullName": "John Doe",
-   * "_id": "12345"
-   * }
-   * }
    */
   async register(req, res) {
     const errors = validationResult(req);
@@ -36,8 +27,7 @@ module.exports = {
     try {
       const newUser = await new User(req.body);
       newUser.hashedPassword = bcrypt.hashSync(req.body.password, salt);
-
-      // Génération de l'API key en appelant la méthode sur le modèle User
+      // Génération et Set de l'API key en appelant la méthode sur le modèle User
       newUser.setAPIKey();
       await newUser.save();
       const userObj = newUser.toObject(); // Convert Mongoose object to plain JavaScript object
@@ -89,10 +79,6 @@ module.exports = {
    * @summary User logout
    * @tags Auth
    * @return {object} 200 - Successful logout response
-   * @example response - 200 - Example success response
-   * {
-   * "message": "User logged out successfully"
-   * }
    */
   async logout(req, res) {
     try {
