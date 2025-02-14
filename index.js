@@ -16,9 +16,10 @@ if (!process.env.MONGODB_URI) {
 
 const expressJSDocSwagger = require("express-jsdoc-swagger");
 const options = require("./swaggerConfig");
-
+const loggerMiddleware = require("./src/middlewares/loggerMiddleware");
 const app = express();
 
+app.use(loggerMiddleware);
 app.use(express.json()); // Middleware for parsing application/json
 
 // const router = express.Router();
@@ -66,9 +67,9 @@ async function authorize(req, res, next) {
 
 // Définir une route GET pour la racine de l'API
 /**
-  * GET /
-  * @summary API Root
-  * @return {string} 200 - Hello API ! - text/html
+ * GET /
+ * @summary API Root
+ * @return {string} 200 - Hello API ! - text/html
  */
 postrouter.get("/", (req, res) => {
   res.send('<h1> Hello API !</h1> <a href="/api/docs">Documentation</a>'); //TODO: Remove Html
@@ -100,4 +101,3 @@ app.listen(PORT, () => {
   mongoose.connection.on("reconnected", () => console.log("reconnected"));
   mongoose.connection.on("close", () => console.log("close"));
 });
-
