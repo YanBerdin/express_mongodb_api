@@ -37,6 +37,7 @@ const UserSchema = mongoose.Schema({
   apiKey: { // TODO: check if necessary
     type: String,
     unique: true,
+    default: null,
   },
   hashedPassword: { type: String },
   created_at: {
@@ -54,9 +55,15 @@ UserSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.hashedPassword);
 };
 
-UserSchema.methods.setAPIKey = async function (password) {
+UserSchema.methods.setAPIKey = async function () {
   this.apiKey = bcrypt.hashSync(this.email, 10); //TODO : remplacer hashSync par hash
+  console.log("API Key : ", this.apiKey);
 };
+/*
+UserSchema.methods.setAPIKey = function () {
+  this.apiKey = crypto.randomBytes(32).toString("hex");
+};
+*/
 /*
 // Proposition de solution
 UserSchema.methods.setAPIKey = async function () {
