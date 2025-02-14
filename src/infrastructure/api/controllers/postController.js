@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Post = require("../models/Post");
+const Post = require("../../../core/entities/Post");
 const { validationResult } = require("express-validator");
 
 module.exports = {

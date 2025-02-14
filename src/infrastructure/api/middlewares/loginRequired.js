@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require("../../../core/entities/User");
 
 async function loginRequired(req, res, next) {
     console.log("Authorization header:", req.headers); //TODO: Remove

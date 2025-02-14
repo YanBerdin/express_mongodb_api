@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const RevokedToken = require("./src/models/RevokedToken");
+const RevokedToken = require("./src/core/entities/RevokedToken");
 
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
@@ -15,7 +15,7 @@ if (!process.env.MONGODB_URI) {
 
 const expressJSDocSwagger = require("express-jsdoc-swagger");
 const options = require("./swaggerConfig");
-const loggerMiddleware = require("./src/middlewares/loggerMiddleware");
+const loggerMiddleware = require("./src/infrastructure/api/middlewares/loggerMiddleware");
 const app = express();
 
 app.use(loggerMiddleware);
@@ -25,11 +25,11 @@ const postrouter = express.Router();
 const userrouter = express.Router();
 const protectedrouter = express.Router();
 const protectedUserRouter = express.Router();
-
-require("./src/routes/freeposts")(postrouter);
-require("./src/routes/userroutes")(userrouter);
-require("./src/protected_routes/protectedposts")(protectedrouter);
-require("./src/protected_routes/protectedUserRoute")(protectedUserRouter);
+//src/infrastructure/api/routes/freeposts.js
+require("./src/infrastructure/api/routes/freeposts")(postrouter);
+require("./src/infrastructure/api/routes/userroutes")(userrouter);
+require("./src/infrastructure/api/protected_routes/protectedposts")(protectedrouter);
+require("./src/infrastructure/api/protected_routes/protectedUserRoute")(protectedUserRouter);
 
 expressJSDocSwagger(app)(options);
 

@@ -4,7 +4,7 @@ const {
   validateCreatePost,
   validateUpdatePost,
   validatePostId,
-} = require("../validators");
+} = require("../middlewares/validators");
 
 const {
   createPost,
@@ -12,7 +12,7 @@ const {
   findOnePostAndDelete,
 } = require("../controllers/postController");
 
-const User = require("../models/User");
+const User = require("../../../core/entities/User");
 
 const loginRequired = require("../middlewares/loginRequired");
 

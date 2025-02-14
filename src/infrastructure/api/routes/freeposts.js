@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const { validatePostId } = require("../validators");
+const { validatePostId } = require("../middlewares/validators");
 
 const { findPosts, findOnePost } = require("../controllers/postController");
 

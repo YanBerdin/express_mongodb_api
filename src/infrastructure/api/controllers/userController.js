@@ -1,11 +1,11 @@
 const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
-const { validateLogin, validateRegister } = require("../validators");
+const { validateLogin, validateRegister } = require("../middlewares/validators");
 jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const User = require("../models/User");
-const RevokedToken = require("../models/RevokedToken");
+const User = require("../../../core/entities/User");
+const RevokedToken = require("../../../core/entities/RevokedToken");
 
 const saltRounds = 10; // Number of rounds to generate salt
 const salt = bcrypt.genSaltSync(saltRounds); // Generate salt

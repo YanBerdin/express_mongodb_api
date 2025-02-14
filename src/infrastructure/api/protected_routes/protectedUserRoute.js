@@ -1,5 +1,5 @@
 const { logout } = require("../controllers/userController");
-const User = require("../models/User");
+const User = require("../../../core/entities/User");
 // const apiKeyRequired = require("../middlewares/apiKeyRequired");
 const loginRequired = require("../middlewares/loginRequired");
 

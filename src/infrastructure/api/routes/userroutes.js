@@ -1,4 +1,4 @@
-const { validateLogin, validateRegister } = require("../validators");
+const { validateLogin, validateRegister } = require("../middlewares/validators");
 const { register, login } = require("../controllers/userController");
 
 module.exports = (userrouter) => {
