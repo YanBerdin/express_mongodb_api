@@ -3,12 +3,7 @@ const Post = require("../../../core/entities/Post");
 const { validationResult } = require("express-validator");
 
 module.exports = {
-  /**
-   * @route GET /posts
-   * @summary Returns a list of posts
-   * @tags Posts
-   * @returns {Array<Post>} 200 - Success response with an array of posts
-   */
+
   async findPosts(req, res) {
     // console.log(">> GET /posts");
     try {
@@ -19,12 +14,6 @@ module.exports = {
     }
   },
 
-  /**
-   * @route POST /posts/create
-   * @summary Create a new post
-   * @tags Posts
-   * @returns {Post} 201 - New post object
-   */
   async createPost(req, res) {
     console.log(">> POST /posts/create", req.params.id); //TODO: Remove this line
     const errors = validationResult(req);
@@ -43,14 +32,6 @@ module.exports = {
     }
   },
 
-  /**
-   * @route GET /posts/{id}
-   * @summary Returns a post by ID
-   * @tags Posts
-   * @param {string} id.path.required - ID param
-   * @returns {Post} 200 - Post details
-   * @returns {object} 404 - Post not found
-   */
   async findOnePost(req, res) {
     console.log(">> GET /posts/:id", req.params.id); //TODO: Remove this line
     const errors = validationResult(req);
@@ -68,20 +49,6 @@ module.exports = {
     }
   },
 
-  /**
-   * @route PATCH /posts/update/{id}
-   * @summary Update an existing post by Id
-   * @tags Posts
-   * @security BearerAuth
-   * @param {string} id.path.required - The unique ID of the post to be updated
-   * @param {Post} request.body.required - Post information
-   * @returns {Post} 200 - Post updated successfully
-   * @returns {object} 400 - Validation error
-   * @returns {object} 401 - Unauthorized
-   * @returns {object} 403 - Forbidden
-   * @returns {object} 404 - Post not found
-   * @returns {object} 500 - Internal server error
-   */
   async findOnePostAndUpdate(req, res) {
     console.log(">> PATCH /posts/update/:id", req.params.id); //TODO: Remove this line
     console.log(
@@ -105,22 +72,6 @@ module.exports = {
     }
   },
 
-  /**
-   * @route DELETE /posts/delete/{id}
-   * @summary Delete an existing post
-   * @tags Posts
-   * @security BearerAuth
-   * @param {string} id.path.required - The unique ID of the post to be deleted
-   * @returns {object} 200 - Post deleted successfully
-   * @returns {object} 401 - Unauthorized
-   * @returns {object} 403 - Forbidden
-   * @returns {object} 404 - Post not found
-   * @returns {object} 500 - Internal server error
-   * @example response - 200 - Example success response
-   * {
-   *  "message": "Post deleted successfully"
-   * }
-   */
   async findOnePostAndDelete(req, res) {
     console.log(">> DELETE /posts/delete/:id", req.params.id); //TODO: Remove this line
     console.log(

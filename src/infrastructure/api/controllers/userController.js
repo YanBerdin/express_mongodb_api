@@ -11,13 +11,7 @@ const saltRounds = 10; // Number of rounds to generate salt
 const salt = bcrypt.genSaltSync(saltRounds); // Generate salt
 
 module.exports = {
-  /**
-   * @route POST /auth/register
-   * @summary Register a new user
-   * @tags Auth
-   * @param {RegisterRequest} request.body.required - User's information
-   * @return {object} 201 - Successful registration response
-   */
+
   async register(req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -74,12 +68,6 @@ module.exports = {
     }
   },
 
-  /**
-   * @route POST /auth/logout
-   * @summary User logout
-   * @tags Auth
-   * @return {object} 200 - Successful logout response
-   */
   async logout(req, res) {
     try {
       const authHeader = req.headers.authorization;

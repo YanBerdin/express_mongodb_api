@@ -23,7 +23,7 @@ module.exports = (protectedrouter) => {
    * @tags Posts
    * @security BearerAuth
    * @param {Post} request.body.required - Post information
-   * @return {object} 201 - Post created successfully
+   * @return {Post} 201 - Post created successfully
    * @example response - 201 - Example success response
    * {
    *   "id": "612e123a4f1a4a23e4d12345",
@@ -73,12 +73,12 @@ module.exports = (protectedrouter) => {
   );
   /**
    * PATCH /posts/update/{id}
-   * @summary Update an existing post
+   * @summary Update an existing post by Id
    * @tags Posts
    * @security BearerAuth
    * @param {string} id.path.required - The unique ID of the post to be updated
    * @param {Post} request.body.required - Post information
-   * @return {object} 200 - Post updated successfully
+   * @return {Post} 200 - Post updated successfully
    * @example response - 200 - Example success response
    * {
    *   "id": "612e123a4f1a4a23e4d12345",
