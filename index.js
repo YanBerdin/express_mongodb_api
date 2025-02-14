@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const RevokedToken = require("./src/models/RevokedToken");
 
 require("dotenv").config();
-//const Post = require("./models");
 const PORT = process.env.PORT || 3000;
 
 if (!process.env.MONGODB_URI) {
@@ -20,23 +19,18 @@ const loggerMiddleware = require("./src/middlewares/loggerMiddleware");
 const app = express();
 
 app.use(loggerMiddleware);
-app.use(express.json()); // Middleware for parsing application/json
+app.use(express.json()); // parsing
 
-// const router = express.Router();
 const postrouter = express.Router();
 const userrouter = express.Router();
 const protectedrouter = express.Router();
 const protectedUserRouter = express.Router();
 
-// require("./src/routes/posts")(router);
 require("./src/routes/freeposts")(postrouter);
-// require("./src/routes/userroutes")(router);
 require("./src/routes/userroutes")(userrouter);
-// require("./src/routes/post")(router);
 require("./src/protected_routes/protectedposts")(protectedrouter);
 require("./src/protected_routes/protectedUserRoute")(protectedUserRouter);
 
-// Appliquer la configuration Swagger
 expressJSDocSwagger(app)(options);
 
 async function authorize(req, res, next) {
@@ -65,7 +59,6 @@ async function authorize(req, res, next) {
   }
 }
 
-// Définir une route GET pour la racine de l'API
 /**
  * GET /
  * @summary API Root
@@ -85,7 +78,6 @@ app.use("/", userrouter);
 app.use("/", authorize, protectedrouter);
 app.use("/", authorize, protectedUserRouter);
 
-// Connexion à la base de données et démarrage du serveur
 app.listen(PORT, () => {
   console.log(`🚀 app listening on PORT ${PORT}`);
   mongoose
