@@ -101,22 +101,3 @@ app.listen(PORT, () => {
   mongoose.connection.on("close", () => console.log("close"));
 });
 
-/*
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("✅ Connexion à la base de données réussie");
-    app.listen(PORT, () => {
-      console.log(`🚀 Serveur en ligne sur le port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("❌ Échec de la connexion à la base de données", err);
-    //process.exit(1);
-  });
-
-mongoose.connection.on("connected", () => console.log("🔗 MongoDB : connecté"));
-mongoose.connection.on("disconnected", () => console.log("🔌 MongoDB : déconnecté"));
-mongoose.connection.on("reconnected", () => console.log("♻️ MongoDB : reconnecté"));
-mongoose.connection.on("close", () => console.log("❎ MongoDB : connexion fermée"));
-*/

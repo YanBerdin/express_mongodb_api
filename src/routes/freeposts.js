@@ -20,6 +20,14 @@ module.exports = (postrouter) => {
    *   }
    * ]
    */
+  /**
+   * @typedef {object} Post - Post information
+   * @property {string} title.required - Title of the post
+   * @property {string} content.required - Content of the post
+   * @property {string} author.required - Author of the post
+   * @property {string} created_at.required - Date of creation
+   * @property {string} _id.required - Post ID
+   */
   postrouter.get("/posts", findPosts);
 
   /**
@@ -35,6 +43,12 @@ module.exports = (postrouter) => {
    * "created_at": "2023-10-12T07:20:50.52Z",
    * "author": "John Doe"
    * }
+   */
+  /**
+   * @typedef {object} Post - Post information
+   * @property {string} title.required - Title of the post
+   * @property {string} content.required - Content of the post
+   * @property {string} author.required - Author of the post
    */
   postrouter.get("/posts/:id", validatePostId, findOnePost);
 };

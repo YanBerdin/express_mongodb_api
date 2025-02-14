@@ -1,4 +1,4 @@
-const { logout } = require("../controllers/userController"); // {generateAPIKey}
+const { logout } = require("../controllers/userController");
 const User = require("../models/User");
 // const apiKeyRequired = require("../middlewares/apiKeyRequired");
 const loginRequired = require("../middlewares/loginRequired");
@@ -14,18 +14,23 @@ module.exports = (protectedUserRouter) => {
   );
 */
 
-  /**
-   * POST /auth/logout
-   * @summary User logout
-   * @tags Auth
-   * @security BearerAuth
-   * @return {object} 200 - Successful logout response
-   * @example response - 200 - Example success response
-   * {
-   *  "message": "User logged out successfully"
-   * }
-   * 
-   * */
+/**
+ * POST /auth/logout
+ * @summary User logout
+ * @tags Auth
+ * @security BearerAuth
+ * @return {object} 200 - Successful logout response
+ * @example response - 200 - Example success response
+ * {
+ *  "message": "User logged out successfully"
+ * }
+ *
+ * */
+/**
+ * @typedef {object} LogoutRequest
+ * @property {string} email.required - User's email
+ * @property {string} password.required - User's password
+ */
 module.exports = (protectedUserRouter) => {
   protectedUserRouter.post("/auth/logout", loginRequired, logout);
 };

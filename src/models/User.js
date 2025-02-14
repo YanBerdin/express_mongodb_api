@@ -53,9 +53,14 @@ UserSchema.virtual("fullname").get(function () {
 UserSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.hashedPassword);
 };
+
+UserSchema.methods.setAPIKey = async function (password) {
+  this.apiKey = bcrypt.hashSync(this.email, 10); //TODO : remplacer hashSync par hash
+};
 /*
-UserSchema.methods.setAPIKey = function (password) {
-  this.apiKey = bcrypt.hashSync(this.email, 10);
+// Proposition de solution
+UserSchema.methods.setAPIKey = async function () {
+  this.apiKey = await bcrypt.hash(this.email, 10);
 };
 */
 module.exports = mongoose.model("User", UserSchema);

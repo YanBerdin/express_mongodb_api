@@ -161,21 +161,4 @@ module.exports = (protectedrouter) => {
     validatePostId,
     findOnePostAndDelete
   );
-
-   /**
-   //  * POST /generateApiKey
-   //  * @summary Generate a new API key
-   //  * @tags Auth
-   //  * @return {object} 200 - Successful response
-   //  * @example response - 200 - Example success response
-   * {
-   *   "apiKey": "abcd1234efgh5678ijkl9101"
-   * }
-  // * @return {object} 401 - Unauthorized
-  // * @example response - 401 - Example unauthorized response
-   * {
-   *   "message": "Unauthorized user, Please register a new account or login"
-   * }
-   */
-  // protectedrouter.post("/generateApiKey", loginRequired, generateAPIKey);
 };

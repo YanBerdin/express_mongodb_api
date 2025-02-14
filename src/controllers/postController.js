@@ -142,18 +142,4 @@ module.exports = {
       return res.status(500).json({ message: "Erreur serveur", error });
     }
   },
-
-  /*
-  async findOnePostAndDelete(req, res) {
-    // console.log(">> DELETE /posts/delete/:id");
-    try {
-      const query = { _id: req.params.id };
-      await Post.findOneAndDelete(query);
-      res.send("new post successfully deleted");
-    } catch (error) {
-      console.log(error);
-      res.send(error);
-    }
-  },
-*/
 };

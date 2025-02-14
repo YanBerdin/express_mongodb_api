@@ -36,6 +36,9 @@ module.exports = {
     try {
       const newUser = await new User(req.body);
       newUser.hashedPassword = bcrypt.hashSync(req.body.password, salt);
+
+      // Génération de l'API key en appelant la méthode sur le modèle User
+      newUser.setAPIKey();
       await newUser.save();
       const userObj = newUser.toObject(); // Convert Mongoose object to plain JavaScript object
       delete userObj.hashedPassword; // Delete hashed password from user object before sending it back
@@ -80,21 +83,6 @@ module.exports = {
       res.json(error);
     }
   },
-  /*
-  async generateAPIKey(req, res) {
-    try {
-      const user = await User.findOne({ email: req.user.email });
-      user.setAPIKey();
-      await user.save();
-      res.setHeader("x-api-key", user.apiKey); // Ajouter l'API key au header
-      console.log("API key generated: ", user.apiKey); //TODO: Remove this line
-      console.log(req.headers); //TODO: Remove this line
-      res.json({ apikey: user.apiKey });
-    } catch (error) {
-      res.json(error);
-    }
-  },
-*/
 
   /**
    * @route POST /auth/logout
@@ -131,42 +119,4 @@ module.exports = {
       });
     }
   },
-
-  /*
-  async logout(req, res) {
-    try {
-      const user = req.user; // User extrait du token JWT
-      if (user) {
-        const authHeader = req.headers.authorization;
-        console.log("authHeader", authHeader); //TODO: Remove this line
-        if (authHeader && authHeader.startsWith("Bearer ")) {
-          const token = authHeader.split(" ")[1];
-          await RevokedToken.create({ token }); // Ajouter le jeton à la liste de révocation en BDD
-        }
-        // Si sessions, détruire la session //TODO: 
-        //! Remove session condition
-        if (req.session) {
-          req.session.destroy((err) => {
-            if (err) {
-              return res
-                .status(500)
-                .json({ message: "Erreur lors de la déconnexion" });
-            }
-            res.status(200).json({ message: "Déconnexion réussie" });
-          });
-        } else {
-          // Si pas de session, simplement envoyer une réponse de succès
-          res.status(200).json({ message: "Déconnexion réussie" });
-        }
-      } else {
-        res.status(401).json({ message: "Utilisateur non authentifié" });
-      }
-    } catch (error) {
-      res.status(500).json({
-        message: "Erreur lors de la déconnexion",
-        error: error.message,
-      });
-    }
-  },
-  */
 };
