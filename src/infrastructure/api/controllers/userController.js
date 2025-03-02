@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const UserUseCases = require("../../../core/usecases/userUseCases"); // Ajuste le chemin si nécessaire
+const UserUseCases = require("../../../core/usecases/userUseCases");
 
 class UserController {
   constructor() {

@@ -1,4 +1,4 @@
-const UserRepository = require("../../infrastructure/repositories/userRepository");
+const MongooseUserRepository = require("../../infrastructure/repositories/MongooseUserRepository");
 const RevokedToken = require("../entities/RevokedToken");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -6,7 +6,7 @@ require("dotenv").config();
 
 class UserUseCases {
   constructor() {
-    this.userRepository = new UserRepository();
+    this.userRepository = new MongooseUserRepository();
     this.saltRounds = 10;
   }
 

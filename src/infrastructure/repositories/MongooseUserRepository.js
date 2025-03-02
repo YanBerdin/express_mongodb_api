@@ -1,7 +1,8 @@
-// src/infrastructure/repositories/userRepository.js
-const User = require("../../core/entities/User"); // ou le chemin correct vers ton modèle Mongoose
+// Module d'abstraction de l'accès à la BDD.
+const User = require("../../core/entities/User"); // model Mongoose
+const UserRepositoryInterface = require("../../core/ports/userRepositoryInterface");
 
-class UserRepository {
+class MongooseUserRepository extends UserRepositoryInterface {
   /**
    * Sauvegarde un nouvel utilisateur dans la BDD
    * @param {Object} userData - Données de l'utilisateur à sauvegarder
@@ -11,8 +12,7 @@ class UserRepository {
   async saveUser(userData) {
     try {
       const user = new User(userData);
-      // Génération et set de l'API key
-      user.setAPIKey();
+      user.setAPIKey(); // Génération et set de l'API key
       return await user.save();
     } catch (error) {
       throw new Error(`Error saving user: ${error.message}`);
@@ -45,9 +45,8 @@ class UserRepository {
     }
   }
 
-  // Optionnellement, tu peux ajouter d'autres méthodes, par exemple :
   // async updateUser(id, updateData) { ... }
   // async deleteUser(id) { ... }
 }
 
-module.exports = UserRepository;
+module.exports = MongooseUserRepository;
