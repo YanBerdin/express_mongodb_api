@@ -5,9 +5,11 @@ const { validatePostId } = require("../middlewares/validators");
 
 const { findPosts, findOnePost } = require("../controllers/postController");
 
+//?const PostController = require("../controllers/postController");
+
 const postRoutes = express.Router();
 
-// module.exports = (postrouter) => {
+//* module.exports = (postrouter) => {
 /**
  * GET /posts
  * @summary Returns a list of posts
@@ -70,5 +72,5 @@ postRoutes.get("/posts", findPosts);
  * @property {string} author.required - Author of the post
  */
 postRoutes.get("/posts/:id", validatePostId, findOnePost);
-// };
+//* };
 module.exports = postRoutes;

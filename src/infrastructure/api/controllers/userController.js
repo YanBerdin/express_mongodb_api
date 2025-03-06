@@ -6,31 +6,38 @@ class UserController {
     this.userUseCases = new UserUseCases();
   }
 
+  // POST /auth/register
   register = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    
+
     try {
       const user = await this.userUseCases.registerUser(req.body);
       console.log("User registered successfully", user); //TODO: Remove this line
       const userObj = user.toObject();
       delete userObj.hashedPassword;
-      res.status(201).json({ message: "User registered successfully", user: userObj });
+      res
+        .status(201)
+        .json({ message: "User registered successfully", user: userObj });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   };
 
+  // POST /auth/login
   login = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    
+
     try {
-      const { token } = await this.userUseCases.loginUser(req.body.email, req.body.password);
+      const { token } = await this.userUseCases.loginUser(
+        req.body.email,
+        req.body.password
+      );
       res.json({ token });
     } catch (error) {
       const status = error.message.includes("Invalid") ? 401 : 500;
@@ -38,6 +45,7 @@ class UserController {
     }
   };
 
+  // POST /auth/logout
   logout = async (req, res) => {
     try {
       const authHeader = req.headers.authorization;

@@ -20,7 +20,7 @@ const loginRequired = require("../middlewares/loginRequired");
 
 const protectedRoutes = express.Router();
 
-// module.exports = (protectedrouter) => {
+//* module.exports = (protectedrouter) => {
 /**
  * POST /posts/create
  * @summary Create a new post
@@ -165,5 +165,5 @@ protectedRoutes.delete(
   validatePostId,
   findOnePostAndDelete
 );
-//};
+//*};
 module.exports = protectedRoutes;
