@@ -1,7 +1,11 @@
+const express = require("express");
+
 const { logout } = require("../controllers/userController");
 const User = require("../../../core/entities/User");
 // const apiKeyRequired = require("../middlewares/apiKeyRequired");
 const loginRequired = require("../middlewares/loginRequired");
+
+const protectedUserRoutes = express.Router();
 
 /*
 module.exports = (protectedUserRouter) => {
@@ -31,6 +35,9 @@ module.exports = (protectedUserRouter) => {
  * @property {string} email.required - User's email
  * @property {string} password.required - User's password
  */
-module.exports = (protectedUserRouter) => {
+protectedUserRoutes.post("/auth/logout", loginRequired, logout);
+/*module.exports = (protectedUserRouter) => {
   protectedUserRouter.post("/auth/logout", loginRequired, logout);
 };
+*/
+module.exports = protectedUserRoutes;

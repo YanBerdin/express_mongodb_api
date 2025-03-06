@@ -1,36 +1,45 @@
+require("dotenv").config();
+const App = require("./src/config/app");
+
+// Crée une instance de l'application et l'exporte
+const app = new App().getApp();
+
+module.exports = app;
+
+                    /*
 const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const RevokedToken = require("./src/core/entities/RevokedToken");
 
 require("dotenv").config();
+//const Post = require("./models");
 const PORT = process.env.PORT || 3000;
-
-if (!process.env.MONGODB_URI) {
-  console.error("❌ Erreur : MONGODB_URI non définie dans .env");
-  process.exit(1);
-}
-
-//TODO const MONGODB_ATLAS_URI = process.env.MONGODB_ATLAS_URI;
 
 const expressJSDocSwagger = require("express-jsdoc-swagger");
 const options = require("./swaggerConfig");
-const loggerMiddleware = require("./src/infrastructure/api/middlewares/loggerMiddleware");
+
+//TODO const MONGODB_ATLAS_URI = process.env.MONGODB_ATLAS_URI;
+
 const app = express();
 
-app.use(loggerMiddleware);
-app.use(express.json()); // parsing
+app.use(express.json()); // Middleware for parsing application/json
 
+// const router = express.Router();
 const postrouter = express.Router();
 const userrouter = express.Router();
 const protectedrouter = express.Router();
 const protectedUserRouter = express.Router();
-//src/infrastructure/api/routes/freeposts.js
-require("./src/infrastructure/api/routes/freeposts")(postrouter);
-require("./src/infrastructure/api/routes/userroutes")(userrouter);
-require("./src/infrastructure/api/protected_routes/protectedposts")(protectedrouter);
-require("./src/infrastructure/api/protected_routes/protectedUserRoute")(protectedUserRouter);
 
+// require("./src/routes/posts")(router);
+require("./src/routes/freeposts")(postrouter);
+// require("./src/routes/userroutes")(router);
+require("./src/routes/userroutes")(userrouter);
+// require("./src/routes/post")(router);
+require("./src/protected_routes/protectedposts")(protectedrouter);
+require("./src/protected_routes/protectedUserRoute")(protectedUserRouter);
+
+// Appliquer la configuration Swagger
 expressJSDocSwagger(app)(options);
 
 async function authorize(req, res, next) {
@@ -53,24 +62,53 @@ async function authorize(req, res, next) {
       next();
     });
   } else {
-    return res
-      .status(401)
-      .json({ message: "authorize:  Utilisateur non authentifié" });
+    return res.status(401).json({ message: "authorize:  Utilisateur non authentifié" });
   }
 }
-
+                     */
+// Définir une route GET pour la racine de l'API
 /**
- * GET /
- * @summary API Root
- * @return {string} 200 - Hello API ! - text/html
+ * @openapi
+ * /:
+ *   get:
+ *     summary: Renvoie un message de bienvenue
+ *     description: Renvoie un message de bienvenue à l'utilisateur.
+ *     tags:
+ *       - Racine
+ *     responses:
+ *       200:
+ *         description: Message de bienvenue
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: string
+ *               example: Hello World!
+ *       400:
+ *         description: Requête incorrecte
+ *       401:
+ *         description: Utilisateur non authentifié
+ *       403:
+ *         description: Accès refusé
+ *       404:
+ *         description: Message de bienvenue introuvable
+ *       405:
+ *         description: Méthode non autorisée
+ *       409:
+ *         description: Conflit
+ *       429:
+ *         description: Trop de requêtes
+ *       500:
+ *         description: Erreur lors de la récupération du message de bienvenue
  */
+                      /*
 postrouter.get("/", (req, res) => {
   res.send('<h1> Hello API !</h1> <a href="/api/docs">Documentation</a>'); //TODO: Remove Html
-  // res.send('Hello API ! documentation: /api/docs');
-});
+      // res.send('Hello API ! documentation: /api/docs');
+
+  });
 
 postrouter.get("/api/docs", (req, res) => {
-  // res.redirect("/api/docs");
+ // res.redirect("/api/docs");
 });
 
 app.use("/", postrouter);
@@ -78,18 +116,47 @@ app.use("/", userrouter);
 app.use("/", authorize, protectedrouter);
 app.use("/", authorize, protectedUserRouter);
 
+
+if (!process.env.MONGODB_URI) {
+  console.error("❌ Erreur : MONGODB_URI non définie dans .env");
+  process.exit(1);
+}
+
+
+// Connexion à la base de données et démarrage du serveur
 app.listen(PORT, () => {
-  console.log(`🚀 app listening on PORT ${PORT}`);
+  console.log(`Example app listening on PORT ${PORT}`);
   mongoose
     .connect(process.env.MONGODB_URI)
     .then(() => {
-      console.log("✅ successfully connected to the database");
+      console.log("successfully connected to the database");
     })
     .catch((err) => {
-      console.error("❌ Error connecting to the database", err);
+      console.error("Error connecting to the database", err);
     });
   mongoose.connection.on("connected", () => console.log("connected"));
   mongoose.connection.on("disconnected", () => console.log("disconnected"));
   mongoose.connection.on("reconnected", () => console.log("reconnected"));
   mongoose.connection.on("close", () => console.log("close"));
 });
+
+                            /*
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log("✅ Connexion à la base de données réussie");
+    app.listen(PORT, () => {
+      console.log(`🚀 Serveur en ligne sur le port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ Échec de la connexion à la base de données", err);
+    //process.exit(1);
+  });
+
+mongoose.connection.on("connected", () => console.log("🔗 MongoDB : connecté"));
+mongoose.connection.on("disconnected", () => console.log("🔌 MongoDB : déconnecté"));
+mongoose.connection.on("reconnected", () => console.log("♻️ MongoDB : reconnecté"));
+mongoose.connection.on("close", () => console.log("❎ MongoDB : connexion fermée"));
+
+                     */
