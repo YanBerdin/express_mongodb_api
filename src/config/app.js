@@ -25,11 +25,6 @@ class App {
   }
 
   setupRoutes() {
-    this.app.get("/", (req, res) => {
-      res.send('<h1> Hello API !</h1> <a href="/api/docs">Documentation</a>'); //TODO: Remove Html
-      // res.send('Hello API ! documentation: /api/docs');
-    });
-
     this.app.get("/api/docs", (req, res) => {
       // res.redirect("/api/docs");
     });

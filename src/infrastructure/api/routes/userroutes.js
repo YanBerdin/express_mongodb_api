@@ -9,6 +9,22 @@ const { register, login } = require("../controllers/userController");
 const userRoutes = express.Router();
 
 // module.exports = (userrouter) => {
+
+/**
+ * @openapi
+ * GET /
+ * @summary Welcome message
+ * @tags Root
+ * @description Welcome message to the API
+ * @return {string} 200 - Welcome message
+ * @example response - 200 - Example welcome message
+ * "Hello API !"
+ */
+userRoutes.get("/", (req, res) => {
+  res.send('<h1> Hello API !</h1> <a href="/api/docs">Documentation</a>'); //TODO: Remove Html
+  // res.send('Hello API ! documentation: /api/docs');
+});
+
 /**
  * POST /auth/register
  * @summary Register a new user

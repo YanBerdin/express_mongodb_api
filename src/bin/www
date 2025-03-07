@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 require("dotenv").config();
 const app = require("../../index");
 const connectDB = require("../config/database");
@@ -5,16 +6,26 @@ const connectDB = require("../config/database");
 const PORT = process.env.PORT || 3000;
 console.log("Starting server...");
 
-// Connexion à MongoDB
-connectDB()
-  .then(() => {
-    console.log("Connected to MongoDB");
+const startServer = async () => {
+  try {
+    await Promise.race([
+      connectDB(),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("MongoDB connection timeout")), 10000)
+      ),
+    ]);
+    console.log("✅ Connected to MongoDB");
 
     app.listen(PORT, () => {
       console.log(`🚀 Server listening on PORT ${PORT}`);
     });
-  })
-  .catch((err) => {
-    console.error("Failed to connect to MongoDB", err);
+  } catch (err) {
+    console.error("❌ Failed to connect to MongoDB", err);
     process.exit(1);
-  });
+  }
+};
+
+startServer();
+
+console.log(`🌍 Running in ${process.env.NODE_ENV || "development"} mode`); //TODO Remove this line
+// console.log(`📡 MongoDB URL: ${process.env.MONGO_URI ? "Defined" : "Not set"}`); //TODO 
