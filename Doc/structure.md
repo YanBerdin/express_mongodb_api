@@ -10,6 +10,7 @@
 │   │   └── www                        # Point d'entrée pour démarrer le serveur
 │   ├── 📁 config/                    # Fichiers de configuration de l'application
 │   │   ├── app.js                     # Classe qui gère l'application
+│   │   ├── config.js                  # Variables d'environnement
 │   │   └── database.js                # Connexion à la base de données
 │   ├── 📁 core/                      # Cœur de l'application (Domaine, Use Cases)
 │   │   ├── 📁 entities/               # Modèles de données (Domain Entities)
@@ -62,6 +63,7 @@
 | ├── 📁 config/          | Fichiers de configuration                        |
 | │   ├── app.js         | Classe qui gère l'application                    |
 | │   ├── database.js    | Connexion à la base de données                   |
+| │   ├── config.js      | Variables d’environnement                        |
 | 📁 core/                | Cœur de l'application                            |
 | ├── 📁 entities/        | Modèles de données                               |
 | │   ├── Post.js        | Modèle Post                                      |

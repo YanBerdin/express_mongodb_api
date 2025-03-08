@@ -22,6 +22,7 @@ Cette API permet de gérer des utilisateurs et des posts avec une authentificati
 | ├── 📁 config/          | Fichiers de configuration                        |
 | │   ├── app.js         | Classe qui gère l'application                    |
 | │   ├── database.js    | Connexion à la base de données                   |
+| │   ├── config.js      | Variables d’environnement                        |
 | 📁 core/                | Cœur de l'application                            |
 | ├── 📁 entities/        | Modèles de données                               |
 | │   ├── Post.js        | Modèle Post                                      |
