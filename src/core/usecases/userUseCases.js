@@ -2,7 +2,8 @@ const MongooseUserRepository = require("../../infrastructure/repositories/Mongoo
 const RevokedToken = require("../entities/RevokedToken");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+// require("dotenv").config();
+const config = require("../../config/config");
 
 class UserUseCases {
   constructor() {
@@ -49,7 +50,7 @@ class UserUseCases {
           fullName: user.fullName,
           _id: user._id,
         },
-        process.env.TOKEN_SECRET,
+        config.tokenSecret,
         { expiresIn: "15m" }
       );
       return { token };

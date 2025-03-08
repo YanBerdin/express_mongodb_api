@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const PostUseCases = require("../../../core/usecases/postUseCases");
+const mongoose = require("mongoose");
 
 class PostController {
   constructor() {

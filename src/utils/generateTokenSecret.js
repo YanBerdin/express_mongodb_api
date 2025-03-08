@@ -5,5 +5,5 @@
 const crypto = require("crypto");
 
 
-const tokenSecret = crypto.randomBytes(32).toString("hex");
-console.log(`Votre TOKEN_SECRET est : ${tokenSecret}`);
+const tokenSecretGenerated = crypto.randomBytes(32).toString("hex");
+console.log(`Votre TOKEN_SECRET est : ${tokenSecretGenerated}`);

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const RevokedToken = require("../../../core/entities/RevokedToken");
+const config = require("../../../config/config");
 
 const authorize = async (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -19,7 +20,7 @@ const authorize = async (req, res, next) => {
       return res.status(401).json({ message: "Token révoqué" });
     }
 
-    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    const decoded = jwt.verify(token, config.tokenSecret);
     req.user = decoded;
 
     next();

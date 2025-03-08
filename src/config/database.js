@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const config = require("../config/config");
 
 const connectDB = async () => {
-  const MONGODB_URI = process.env.MONGODB_URI;
+  const MONGODB_URI = config.mongoURI;
 
   if (!MONGODB_URI) {
     console.error("❌ Erreur : MONGODB_URI non définie dans .env");

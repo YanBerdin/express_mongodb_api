@@ -10,6 +10,37 @@ Cette API permet de gérer des utilisateurs et des posts avec une authentificati
 - **JWT (JsonWebToken)** : Pour l'authentification basée sur des tokens.
 - **dotenv** : Permet de charger les variables d’environnement à partir d’un fichier `.env`.
 
+## Structure
+
+| Dossier/Fichier         | Description                                      |
+|-------------------------|--------------------------------------------------|
+| 📁 .vscode/             | Configuration spécifique à l'IDE (VS Code)       |
+| ├── settings.json       | Paramètres de VS Code                            |
+| 📁 src/                 | Dossier principal du code source                 |
+| ├── 📁 bin/             | Fichiers exécutables                             |
+| │   ├── www            | Point d'entrée pour démarrer le serveur          |
+| ├── 📁 config/          | Fichiers de configuration                        |
+| │   ├── app.js         | Classe qui gère l'application                    |
+| │   ├── database.js    | Connexion à la base de données                   |
+| 📁 core/                | Cœur de l'application                            |
+| ├── 📁 entities/        | Modèles de données                               |
+| │   ├── Post.js        | Modèle Post                                      |
+| │   ├── User.js        | Modèle User                                      |
+| 📁 infrastructure/      | Couche d'infrastructure et API                   |
+| ├── 📁 api/            | Exposition des endpoints                         |
+| │   ├── 📁 controllers/| Contrôleurs (MVC)                                |
+| │   │   ├── postController.js | Gestion des posts                        |
+| │   │   ├── userController.js | Gestion des utilisateurs                  |
+| 📁 repositories/        | Couche persistance des données                   |
+| ├── MongooseUserRepository.js | Implémentation UserRepository avec Mongoose |
+| ├── MongoosePostRepository.js | Implémentation PostRepository avec Mongoose |
+| 📁 utils/               | Fonctions utilitaires                            |
+| ├── generateTokenSecret.js | Génération du secret JWT                     |
+| 📄 .env.example         | Exemple de fichier d’environnement               |
+| 📄 index.js             | Point d’entrée principal                         |
+| 📄 swaggerConfig.js     | Configuration Swagger pour la documentation API  |
+
+
 ## Installation
 
 Cloner le dépôt, puis installer les dépendances :

@@ -1,10 +1,12 @@
 #!/usr/bin/env node
-require("dotenv").config();
+// require("dotenv").config();
+const config = require("../config/config");
 const app = require("../../index");
 const connectDB = require("../config/database");
 
-const PORT = process.env.PORT || 3000;
-console.log("Starting server...");
+// const PORT = process.env.PORT || 3000;
+const PORT = config.port;
+console.log("Starting server..."); //TODO Remove this line
 
 const startServer = async () => {
   try {
@@ -27,5 +29,5 @@ const startServer = async () => {
 
 startServer();
 
-console.log(`🌍 Running in ${process.env.NODE_ENV || "development"} mode`); //TODO Remove this line
-// console.log(`📡 MongoDB URL: ${process.env.MONGO_URI ? "Defined" : "Not set"}`); //TODO 
+console.log(`🌍 Running in ${config.NODE_ENV || "Development"} mode`); //TODO Remove this line
+console.log(`📡 MongoDB URL: ${config.mongoURI ? "Ok Defined" : "Not set"}`); //TODO Remove this line
