@@ -1,8 +1,8 @@
+/*
 const MongooseUserRepository = require("../../infrastructure/repositories/MongooseUserRepository");
 const RevokedToken = require("../entities/RevokedToken");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// require("dotenv").config();
 const config = require("../../config/config");
 
 class UserUseCases {
@@ -74,3 +74,4 @@ class UserUseCases {
 }
 
 module.exports = UserUseCases;
+*/

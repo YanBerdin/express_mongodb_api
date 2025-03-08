@@ -1,9 +1,16 @@
 const { validationResult } = require("express-validator");
-const UserUseCases = require("../../../core/usecases/userUseCases");
+// const UserUseCases = require("../../../core/usecases/userUseCases");
+const RegisterUserWithCredentials = require("../../../core/usecases/user-use-cases/register-user-with-credential");
+const loginUserWithCredentialsUseCase = require("../../../core/usecases/user-use-cases/login-user-with-credential");
+const LogoutUser = require("../../../core/usecases/user-use-cases/logout-user");
+
 
 class UserController {
   constructor() {
-    this.userUseCases = new UserUseCases();
+    // this.userUseCases = new UserUseCases();
+    this.registerUserUseCase = new RegisterUserWithCredentials();
+    this.loginUserUseCase = new loginUserWithCredentialsUseCase();
+    this.logoutUserUseCase = new LogoutUser();
   }
 
   // POST /auth/register
@@ -14,7 +21,7 @@ class UserController {
     }
 
     try {
-      const user = await this.userUseCases.registerUser(req.body);
+      const user = await this.registerUserUseCase.registerUser(req.body);
       console.log("User registered successfully", user); //TODO: Remove this line
       const userObj = user.toObject();
       delete userObj.hashedPassword;
@@ -34,7 +41,7 @@ class UserController {
     }
 
     try {
-      const { token } = await this.userUseCases.loginUser(
+      const { token } = await this.loginUserUseCase.loginUser(
         req.body.email,
         req.body.password
       );
@@ -53,7 +60,7 @@ class UserController {
         return res.status(400).json({ message: "Token manquant ou invalide" });
       }
       const token = authHeader.split(" ")[1];
-      const result = await this.userUseCases.logoutUser(token);
+      const result = await this.logoutUserUseCase.logoutUser(token);
       res.status(200).json(result);
     } catch (error) {
       res.status(500).json({ message: error.message });
