@@ -1,17 +1,28 @@
 const { validationResult } = require("express-validator");
-const PostUseCases = require("../../../core/usecases/postUseCases");
+// const PostUseCases = require("../../../core/usecases/postUseCases");
+const CreatePostUseCase = require("../../../core/usecases/post-use-cases/create-post");
+const FindPostsUseCase = require("../../../core/usecases/post-use-cases/find-posts");
+const FindOnePostUseCase = require("../../../core/usecases/post-use-cases/find-one-post");
+const UpdatePostUseCase = require("../../../core/usecases/post-use-cases/update-post");
+const DeletePostUseCase = require("../../../core/usecases/post-use-cases/delete-post");
+
 const mongoose = require("mongoose");
 
 class PostController {
   constructor() {
-    this.postUseCases = new PostUseCases();
+    // this.postUseCases = new PostUseCases();
+    this.createPostUseCase = new CreatePostUseCase();
+    this.findPostsUseCase = new FindPostsUseCase();
+    this.findOnePostUseCase = new FindOnePostUseCase();
+    this.updatePostUseCase = new UpdatePostUseCase();
+    this.deletePostUseCase = new DeletePostUseCase();
   }
 
   // GET /posts
   findPosts = async (req, res) => {
     // console.log(">> GET /posts");
     try {
-      const posts = await this.postUseCases.findPosts();
+      const posts = await this.findPostsUseCase.findPosts();
       res.status(200).json(posts);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -27,7 +38,7 @@ class PostController {
     }
     try {
       console.log(req.body); //TODO: Remove this line
-      const post = await this.postUseCases.createPost(req.body);
+      const post = await this.createPostUseCase.createPost(req.body);
       res.status(201).json(post);
     } catch (error) {
       console.log(error); //TODO: Remove this line
@@ -46,7 +57,7 @@ class PostController {
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const post = await this.postUseCases.findOnePost(req.params.id);
+      const post = await this.findOnePostUseCase.findOnePost(req.params.id);
       //console.log(">> GET /posts/:id", req.params.id);
       if (!post) {
         return res.status(404).json({ error: "Post doesn't exist!" });
@@ -65,7 +76,7 @@ class PostController {
       mongoose.Types.ObjectId.isValid(req.params.id)
     ); //TODO: Remove this line
     try {
-      const updatedPost = await this.postUseCases.updatePost(
+      const updatedPost = await this.updatePostUseCase.updatePost(
         req.params.id,
         req.body
       );
@@ -85,7 +96,7 @@ class PostController {
       mongoose.Types.ObjectId.isValid(req.params.id)
     ); // TODO: Remove this line
     try {
-      const result = await this.postUseCases.deletePost(req.params.id);
+      const result = await this.deletePostUseCase.deletePost(req.params.id);
       if (!result) {
         return res.status(404).json({ message: "Post introuvable" });
       }

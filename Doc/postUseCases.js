@@ -1,4 +1,4 @@
-const MongoosePostRepository = require("../../infrastructure/repositories/mongoosePostRepository");
+/*const MongoosePostRepository = require("../../infrastructure/repositories/mongoosePostRepository");
 
 class PostUseCases {
   constructor() {
@@ -27,3 +27,4 @@ class PostUseCases {
 }
 
 module.exports = PostUseCases;
+*/
