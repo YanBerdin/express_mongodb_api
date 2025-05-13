@@ -31,13 +31,16 @@ Cette API permet de gérer des utilisateurs et des posts avec une authentificati
 | │   │   ├── postRepositoryInterface.js           | Interface repository Post                      |
 | │   │   └── userRepositoryInterface.js           | Interface repository User                      |
 | │   └── 📁 usecases/                             | Logique métier et cas d'utilisation            |
-| │       ├── postUseCases.js                      | Cas d'utilisation des posts                    |
 | │       ├── 📁 post-uses-cases/                  | Cas d'utilisation spécifiques aux posts        |
+| │       │   ├── create-post.js                  |                                                |
+| │       │   ├── find-posts.js                   |                                                |
+| │       │   ├── find-one-post.js                |                                                |
+| │       │   ├── delete-post.js                  |                                                |
+| │       │   └── update-post.js                  |                                                |
 | │       ├── 📁 user-use-cases/                   | Cas d'utilisation spécifiques aux utilisateurs |
 | │       │   ├── login-user-with-credential.js    | Connexion d'un utilisateur                     |
 | │       │   ├── logout-user.js                   | Déconnexion d'un utilisateur                   |
 | │       │   └── register-user-with-credential.js | Inscription d'un utilisateur                   |
-| │       └── userUseCases.js                      | Cas d'utilisation des utilisateurs             |
 | ├── 📁 infrastructure/                           | Couche d'infrastructure et API                 |
 | │   ├── 📁 adapters/                             | Adapteurs pour différentes implémentations     |
 | │   ├── 📁 api/                                  | Exposition des endpoints API                   |
