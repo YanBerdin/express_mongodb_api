@@ -479,25 +479,23 @@ sequenceDiagram
     CreatePostUseCase-->>PostController: Saved post
     PostController-->>ExpressApp: res.status(201).json(post)
     ExpressApp-->>Client: HTTP 201 Response
-end
 ```
 
 ### High-Level Architectural Components
 
 ```mermaid
 graph TD
-    A[Client] --> B(Express App / Routes);
-    B --> C{Middleware};
-    C -- Authentication/Validation --> D[Controllers];
-    D --> E[Use Cases (Core Logic)];
-    E --> F[Ports (Interfaces)];
-    F -- Implemented by --> G[Repositories (Infrastructure)];
-    G --> H[Database (MongoDB)];
-    E -- Domain Objects --> I[Entities (Core Logic)];
-    X[Config] --> B;
-    X --> E;
-    X --> G;
-end
+    A[Client] --> B(Express App / Routes)
+    B --> C{Middleware}
+    C -- Authentication/Validation --> D[Controllers]
+    D --> E[Use Cases (Core Logic)]
+    E --> F[Ports (Interfaces)]
+    F -- Implemented by --> G[Repositories (Infrastructure)]
+    G --> H[Database (MongoDB)]
+    E -- Domain Objects --> I[Entities (Core Logic)]
+    X[Config] --> B
+    X --> E
+    X --> G
 ```
 
 ## 8. Development Notes / TODOs
