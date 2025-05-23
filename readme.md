@@ -283,6 +283,7 @@ class UserController {
   // ...
 }
 ```
+
 Here, `userController.register` calls `this.registerUserUseCase.registerUser(req.body)`, passing the request data to the core business logic layer.
 
 ### JWT Validation Flow in `authMiddleware.js`
