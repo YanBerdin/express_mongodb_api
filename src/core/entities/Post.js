@@ -7,8 +7,8 @@ const PostSchema = mongoose.Schema({
   author: { type: String, required: true },
 });
 
-PostSchema.methods.toLocalString = function () {
-  return this.created_at.toLocalString();
+PostSchema.methods.toLocaleString = function () {
+  return this.created_at.toLocaleString();
 };
 
 module.exports = mongoose.model("Post", PostSchema);

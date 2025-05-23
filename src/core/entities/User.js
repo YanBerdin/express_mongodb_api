@@ -34,7 +34,7 @@ const UserSchema = mongoose.Schema({
     maxlength: 50,
     match: [/\S+@\S+\.\S+/, "is invalid"],
   },
-  apiKey: { // TODO: check if necessary
+  apiKey: { // TODO: will be used to dynamic tokenSecretGenerated
     type: String,
     unique: true,
     default: null,
